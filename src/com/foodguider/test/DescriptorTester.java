@@ -10,6 +10,11 @@ import org.opencv.highgui.HighGui;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
+/**
+ * 이미지 디스크립터에 대한 테스트 함수들
+ * @author root
+ *
+ */
 public final class DescriptorTester implements Tester{
 	@Override
 	public void test() {

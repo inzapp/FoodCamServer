@@ -1,5 +1,10 @@
 package com.foodguider.util;
 
+/**
+ * 공개키를 포함한 Json 사용 간 통신 규약
+ * @author root
+ *
+ */
 public abstract class Cmd {
 	private static final String COMMAND_KEY = "[COMMAND_SERVER_FOOD_MATCHER]";
 	public static final String SERVER_KEY = COMMAND_KEY + "[SERVER_KEY_SERVER_FOOD_MATCHER]";

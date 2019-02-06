@@ -8,7 +8,6 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * 프로젝트 내부에서 공유자원으로서 사용될 변수들 서버소켓, 포트번호, 스레드풀, 이미지 리스트, 음식 이름리스트 등이 있다
- * 
  * @author root
  */
 public abstract class pRes {

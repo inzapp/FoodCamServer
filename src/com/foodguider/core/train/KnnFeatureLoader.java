@@ -5,6 +5,12 @@ import org.opencv.core.Mat;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
+/**
+ * 이미지를 단일행으로 벡터화 해 로드하는 클래스
+ * knn train에 사용된다
+ * @author root
+ *
+ */
 class KnnFeatureLoader implements DataLoader {
 	private final int WIDTH = 500;
 	private final int HEIGHT = 500;

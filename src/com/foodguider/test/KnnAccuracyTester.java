@@ -13,7 +13,11 @@ import com.foodguider.domain.DataSet;
 import com.foodguider.domain.MatchCountAccumulater;
 import com.foodguider.domain.ResponseMapper;
 
-
+/**
+ * knn 매칭률 측정을 위한 테스트 클래스
+ * @author root
+ *
+ */
 public final class KnnAccuracyTester implements Tester{
 
 	@Override

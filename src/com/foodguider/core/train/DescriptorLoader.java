@@ -7,6 +7,11 @@ import org.opencv.features2d.ORB;
 
 import com.foodguider.util.pRes;
 
+/**
+ * 이미지의 키포인트를 추출해 디스크립터를 로드하는 클래스
+ * @author root
+ *
+ */
 class DescriptorLoader implements DataLoader {
 	private Mat rawImg;
 	private FastFeatureDetector fdd;

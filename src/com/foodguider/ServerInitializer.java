@@ -11,6 +11,13 @@ import com.foodguider.core.Predictor;
 import com.foodguider.net.Gate;
 import com.foodguider.util.pRes;
 
+/**
+ * 서버의 초기화를 담당하는 클래스
+ * 서버 접속을 위한 소켓과 스레드풀을 초기화하고
+ * 로컬에 저장된 이미지 DB를 Pre-Processing 한다
+ * @author root
+ *
+ */
 class ServerInitializer {
     static {
     	System.loadLibrary(Core.NATIVE_LIBRARY_NAME);

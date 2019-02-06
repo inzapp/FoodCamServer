@@ -11,6 +11,12 @@ import org.opencv.imgproc.Imgproc;
 
 import com.foodguider.util.pRes;
 
+/**
+ * 이미지 RGB값의 분포도인 히스토그램을 로드하는 클래스
+ * 단일 채널을 사용해 오버헤드를 줄인다
+ * @author root
+ *
+ */
 class HistogramLoader implements DataLoader {
 	private Mat mask;
 	private MatOfInt channel;

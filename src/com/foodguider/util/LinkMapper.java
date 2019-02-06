@@ -3,6 +3,13 @@ package com.foodguider.util;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 추출된 디렉토리 이름(음식 이름)을 이용해
+ * 해당 음식을 소개하는 웹 페이지에 대한 링크를 추출하는
+ * 매퍼 클래스
+ * @author root
+ *
+ */
 public class LinkMapper {
 
 	private Map<String, String> linkMap; // linkMap 아직 안써서 밑줄쳐져있음

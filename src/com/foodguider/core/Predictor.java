@@ -16,6 +16,11 @@ import com.foodguider.domain.ResponseMapper;
 import com.foodguider.util.LinkMapper;
 import com.foodguider.util.pRes;
 
+/**
+ * 훈련된 데이터를 기반으로 새로운 이미지가 어떤 음식인지를 예측하는 클래스
+ * @author root
+ *
+ */
 public final class Predictor {
 
 	private KNearest knn;
@@ -94,6 +99,12 @@ public final class Predictor {
 		return Singleton.INSTANCE;
 	}
 
+	/**
+	 * 이미지의 경로를 인자로 받아 해당 이미지가 어떤 이미지인지 예측해
+	 * 해당 이미지를 소개하는 링크를 Json 형태로 리턴
+	 * @param imgPath
+	 * @return
+	 */
 	public JSONObject predict(String imgPath) {
 		DataSet requestDataSet = getRequestDataSet(imgPath);
 
