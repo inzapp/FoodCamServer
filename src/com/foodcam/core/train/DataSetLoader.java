@@ -107,21 +107,21 @@ public final class DataSetLoader {
 	 * @param imgPath
 	 * @return
 	 */
-	public DataSet getRequestDataSet(String imgPath) {
-		Mat rawImg = Imgcodecs.imread(imgPath, Imgcodecs.IMREAD_ANYCOLOR);
-		if (rawImg.empty()) {
-			pRes.log("Request image not found");
-			return null;
-		}
+	public DataSet getRequestDataSet(Mat receivedImg) {
+//		Mat rawImg = Imgcodecs.imread(imgPath, Imgcodecs.IMREAD_ANYCOLOR);
+//		if (rawImg.empty()) {
+//			pRes.log("Request image not found");
+//			return null;
+//		}
 
-		Mat feature = knnFeatureLoader.load(rawImg);
-		Mat descriptor = descriptorLoader.load(rawImg);
-		Mat histogram = histogramLoader.load(rawImg);
+		Mat feature = knnFeatureLoader.load(receivedImg);
+		Mat descriptor = descriptorLoader.load(receivedImg);
+		Mat histogram = histogramLoader.load(receivedImg);
 
 		try {
 			trainFeatureVector.push_back(feature);
 		} catch (Exception e) {
-			pRes.log("[Request data set load failure] - " + imgPath);
+			pRes.log("[Request data set load failure] - ");
 			return null;
 		}
 		

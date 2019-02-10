@@ -105,8 +105,8 @@ public final class Predictor {
 	 * @param imgPath
 	 * @return
 	 */
-	public JSONObject predict(String imgPath) {
-		DataSet requestDataSet = getRequestDataSet(imgPath);
+	public JSONObject predict(Mat receivedImg) {
+		DataSet requestDataSet = getRequestDataSet(receivedImg);
 
 		int response = (int) knn.findNearest(requestDataSet.getFeatureVector().row(0), k, new Mat());
 		String foodName = responseMap.get(response);
@@ -125,9 +125,9 @@ public final class Predictor {
 		return resultJson;
 	}
 
-	private DataSet getRequestDataSet(String imgPath) {
+	private DataSet getRequestDataSet(Mat receivedImg) {
 		DataSetLoader dataSetLoader = new DataSetLoader();
-		DataSet requestDataSet = dataSetLoader.getRequestDataSet(imgPath);
+		DataSet requestDataSet = dataSetLoader.getRequestDataSet(receivedImg);
 
 		return requestDataSet;
 	}
