@@ -13,7 +13,7 @@ import com.foodcam.util.pRes;
 
 /**
  * 이미지 RGB값의 분포도인 히스토그램을 로드하는 클래스
- * 단일 채널을 사용해 오버헤드를 줄인다
+ * histogram calculation에 사용된다
  * @author root
  *
  */

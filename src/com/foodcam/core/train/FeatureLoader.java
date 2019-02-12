@@ -11,7 +11,7 @@ import org.opencv.imgproc.Imgproc;
  * @author root
  *
  */
-class KnnFeatureLoader implements DataLoader {
+class FeatureLoader implements DataLoader {
 	private final int WIDTH = 500;
 	private final int HEIGHT = 500;
 	private final int blurVal = 4;

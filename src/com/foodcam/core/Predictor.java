@@ -1,18 +1,10 @@
 package com.foodcam.core;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.opencv.core.Mat;
-import org.opencv.ml.KNearest;
-import org.opencv.ml.Ml;
-import org.opencv.utils.Converters;
 
 import com.foodcam.core.train.DataSetLoader;
 import com.foodcam.domain.DataSet;
-import com.foodcam.domain.ResponseMapper;
 import com.foodcam.util.LinkMapper;
 import com.foodcam.util.pRes;
 
@@ -21,76 +13,8 @@ import com.foodcam.util.pRes;
  * @author root
  *
  */
-public final class Predictor {
-
-	private KNearest knn;
-	private HashMap<Integer, String> responseMap;
-	private ArrayList<Mat> descriptorList;
-	private ArrayList<Mat> histogramList;
-	private int k;
-
-	private Predictor() {
-		DataSet trainDataSet = getTrainDataSet();
-		
-		getResponseMap(trainDataSet);
-
-		calculateK(trainDataSet);
-
-		getTrainedKnn(trainDataSet);
-
-		loadCalculatedValue(trainDataSet);
-	}
-
-	private DataSet getTrainDataSet() {
-		DataSetLoader dataSetLoader = new DataSetLoader();
-		DataSet trainDataSet = dataSetLoader.getTrainDataSet(DataSetLoader.ALL);
-
-		return trainDataSet;
-	}
-
-	private void getResponseMap(DataSet trainDataSet) {
-		ResponseMapper responseMapper = trainDataSet.getResponseMapper();
-		responseMap = responseMapper.getResponseMap();
-	}
-
-	private void calculateK(DataSet trainDataSet) {
-		ArrayList<Integer> trainFeatureLabelList = trainDataSet.getFeatureLabelList();
-		int minFeatureCount = getMinFeatureCount(trainFeatureLabelList);
-		k = (int) (Math.sqrt(minFeatureCount) % 2 != 0 ? Math.sqrt(minFeatureCount)
-				: Math.sqrt(minFeatureCount) + 1);
-	}
-
-	private int getMinFeatureCount(ArrayList<Integer> trainFeatureLabelList) {
-		int count = 0;
-		int minCount = Integer.MAX_VALUE;
-		int beforeLabel = trainFeatureLabelList.get(0);
-		for (int curLabel : trainFeatureLabelList) {
-			if (beforeLabel == curLabel) {
-				count++;
-			} else {
-				minCount = count < minCount ? count : minCount;
-				count = 0;
-			}
-
-			beforeLabel = curLabel;
-		}
-
-		return minCount;
-	}
-
-	private void getTrainedKnn(DataSet trainDataSet) {
-		knn = KNearest.create();
-		Mat trainFeatureVector = trainDataSet.getFeatureVector();
-		ArrayList<Integer> trainFeatureLabelList = trainDataSet.getFeatureLabelList();
-		Mat convertedLabelList = Converters.vector_int_to_Mat(trainFeatureLabelList);
-		knn.train(trainFeatureVector, Ml.ROW_SAMPLE, convertedLabelList);
-	}
-
-	private void loadCalculatedValue(DataSet trainDataSet) {
-		descriptorList = trainDataSet.getDescriptorList();
-		histogramList = trainDataSet.getHistogramList();
-	}
-
+public final class Predictor extends PredictorManager {
+	
 	private static class Singleton {
 		static final Predictor INSTANCE = new Predictor();
 	}
@@ -105,30 +29,67 @@ public final class Predictor {
 	 * @param imgPath
 	 * @return
 	 */
+	@Override
 	public JSONObject predict(Mat receivedImg) {
-		DataSet requestDataSet = getRequestDataSet(receivedImg);
-
-		int response = (int) knn.findNearest(requestDataSet.getFeatureVector().row(0), k, new Mat());
-		String foodName = responseMap.get(response);
+		DataSet requestDataSet = getDataSetOfReceivedImg(receivedImg);
+		
+		String foodName = getFoodName(requestDataSet);
+		String foodLink = getFoodLink(foodName);
 
 		pRes.log(foodName);
-
-		String link = LinkMapper.getInstance().getLinkMap().get(foodName);
-		pRes.log(link);
+		pRes.log(foodLink);
 		
-		JSONObject resultJson = new JSONObject();
-		try {
-			resultJson.put("link", link);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return resultJson;
+		return getResult(foodLink);
 	}
-
-	private DataSet getRequestDataSet(Mat receivedImg) {
+	
+	/**
+	 * 클라이언트로부터 수신된 이미지에 대한 DataSet을 리턴한다
+	 * 해당 DataSet은 k-NN, descriptorMatching, histogramComparing에 사용된다
+	 * @param receivedImg
+	 * @return
+	 */
+	private DataSet getDataSetOfReceivedImg(Mat receivedImg) {
 		DataSetLoader dataSetLoader = new DataSetLoader();
-		DataSet requestDataSet = dataSetLoader.getRequestDataSet(receivedImg);
-
-		return requestDataSet;
+		DataSet dataSet = dataSetLoader.getRequestDataSet(receivedImg);
+		
+		return dataSet;
+	}
+	
+	/**
+	 * 로드된 DataSet을 이용해 해당 이미지가 어떤 이미지인지 예측한다
+	 * 예측 방법에는 k-NN 분류, descriptorMatching, histogramComparing이 이용된다
+	 * @param requestDataSet
+	 * @return
+	 */
+	private String getFoodName(DataSet requestDataSet) {
+		int response = (int) knn.findNearest(requestDataSet.getFeatureVector().row(0), k, new Mat());
+		
+		return responseMap.get(response);
+	}
+	
+	/**
+	 * 예측된 음식이름을 이용해 해당 음식을 소개하는 웹링크를 받아온다
+	 * @param foodName
+	 * @return
+	 */
+	private String getFoodLink(String foodName) {
+		return LinkMapper.getInstance().getLinkMap().get(foodName);
+	}
+	
+	/**
+	 * 링크를 받아온 후 최종적인 JSONObject형 리턴을 위해
+	 * 해당 링크를 JSONObject에 담아 리턴한다
+	 * @param foodLink
+	 * @return
+	 */
+	private JSONObject getResult(String foodLink) {
+		JSONObject json = new JSONObject();
+		try {
+			json.put("link", foodLink);
+			return json;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

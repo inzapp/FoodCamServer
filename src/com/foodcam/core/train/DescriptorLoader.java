@@ -9,6 +9,7 @@ import com.foodcam.util.pRes;
 
 /**
  * 이미지의 키포인트를 추출해 디스크립터를 로드하는 클래스
+ * descriptor matching에 사용된다
  * @author root
  *
  */
@@ -23,7 +24,7 @@ class DescriptorLoader implements DataLoader {
 	public DescriptorLoader() {
 		detectMethod = FastFeatureDetector.TYPE_5_8;
 		fdd = FastFeatureDetector.create(detectMethod);
-		orb = ORB.create();
+		orb = ORB.create(10000000);
 		matOfKeyPoint = new MatOfKeyPoint();
 		descriptor = new Mat();
 	}
@@ -45,8 +46,9 @@ class DescriptorLoader implements DataLoader {
 	}
 	
 	private void getKeyPoint() {
-		fdd.detect(rawImg, matOfKeyPoint);
-		ORB.create(ORB.FAST_SCORE).detect(rawImg, matOfKeyPoint);
+//		fdd.detect(rawImg, matOfKeyPoint);
+//		ORB.create(ORB.FAST_SCORE).detect(rawImg, matOfKeyPoint);
+		orb.detect(rawImg, matOfKeyPoint);
 	}
 	
 	private void getDescriptor() {

@@ -16,7 +16,7 @@ public abstract class pRes {
 	public static ServerSocket serverSocket;
 	public static ExecutorService serverThreadPool;
 	public static ThreadPoolExecutor threadCountAlerter;
-	public static final String TRAIN_IMAGE_PATH = "image/food";
+	public static final String TRAIN_DATA_PATH = "trainData";
 
 	public static void log(String msg) {
 		String curTime = new SimpleDateFormat("[yy.MM.dd kk:mm:ss] ").format(new Date());
