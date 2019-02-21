@@ -49,7 +49,7 @@ public final class DataSetLoader {
 		File[] dirArr = trainDataDir.listFiles();
 		for (int i = 0; i < dirArr.length; i++) {
 			File curDir = dirArr[i];
-			if (!curDir.isDirectory()) 
+			if (!curDir.isDirectory())
 				continue;
 
 			File[] fileArr = curDir.listFiles();
@@ -58,13 +58,13 @@ public final class DataSetLoader {
 				if (!curFile.isFile())
 					continue;
 
-				if(requestType == HALF_TRAIN && j % 2 == 1)
+				if (requestType == HALF_TRAIN && j % 2 == 1)
 					continue;
-				else if(requestType == HALF_TEST && j % 2 == 0)
+				else if (requestType == HALF_TEST && j % 2 == 0)
 					continue;
 
 				Mat img = Imgcodecs.imread(curFile.getAbsolutePath());
-				if (img.empty()) 
+				if (img.empty())
 					continue;
 
 				Mat feature = knnFeatureLoader.load(img);
@@ -99,6 +99,7 @@ public final class DataSetLoader {
 
 	/**
 	 * 단일 이미지에 대한 DataSet을 로드 -> 이미지 요청 시 사용
+	 * 
 	 * @param receivedImg
 	 * @return
 	 */

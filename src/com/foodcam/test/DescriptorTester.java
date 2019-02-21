@@ -16,13 +16,11 @@ import org.opencv.imgproc.Imgproc;
  *
  */
 public final class DescriptorTester implements Tester{
+	
 	@Override
 	public void test() {
 		
 	}
-	
-	
-	// tmp
 
     private static void featureView(String imgPath) {
     	Mat img = Imgcodecs.imread(imgPath, Imgcodecs.IMREAD_ANYCOLOR);
