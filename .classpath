@@ -6,11 +6,11 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/root/문서/lib/json-20180813.jar"/>
-	<classpathentry kind="lib" path="/root/문서/lib/opencv-401.jar">
+	<classpathentry kind="lib" path="/inz/lib/opencv-401.jar">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/root/문서/lib"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/inz/lib"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/inz/lib/json-20180813.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

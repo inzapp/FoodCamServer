@@ -13,7 +13,7 @@ import com.foodcam.util.pRes;
  * @author root
  *
  */
-public final class Predictor extends PredictorManager {
+public final class Predictor extends PredictorOperator {
 
 	private static class Singleton {
 		static final Predictor INSTANCE = new Predictor();
