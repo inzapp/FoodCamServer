@@ -68,16 +68,16 @@ public final class DataSetLoader {
 					continue;
 
 				Mat feature = knnFeatureLoader.load(img);
-//				Mat descriptor = descriptorLoader.load(img);
-//				Mat histogram = histogramLoader.load(img);
+				Mat descriptor = descriptorLoader.load(img);
+				Mat histogram = histogramLoader.load(img);
 
 				try {
 					trainFeatureVector.push_back(feature);
 					trainLabelList.add(i);
 					responseMapper.mapResponse(i, curDir.getName());
 
-//					descriptorList.add(descriptor);
-//					histogramList.add(histogram);
+					descriptorList.add(descriptor);
+					histogramList.add(histogram);
 				} catch (Exception e) {
 					pRes.log("[Train failure] - " + curFile.getAbsolutePath());
 					return null;
@@ -90,8 +90,8 @@ public final class DataSetLoader {
 		trainDataSet.setFeatureLabelList(trainLabelList);
 		trainDataSet.setResponseMapper(responseMapper);
 
-//		trainDataSet.setDescriptorList(descriptorList);
-//		trainDataSet.setHistogramList(histogramList);
+		trainDataSet.setDescriptorList(descriptorList);
+		trainDataSet.setHistogramList(histogramList);
 
 		System.out.println("Success to load train data set");
 		return trainDataSet;
@@ -105,8 +105,8 @@ public final class DataSetLoader {
 	 */
 	public DataSet getRequestDataSet(Mat receivedImg) {
 		Mat feature = knnFeatureLoader.load(receivedImg);
-//		Mat descriptor = descriptorLoader.load(receivedImg);
-//		Mat histogram = histogramLoader.load(receivedImg);
+		Mat descriptor = descriptorLoader.load(receivedImg);
+		Mat histogram = histogramLoader.load(receivedImg);
 
 		try {
 			trainFeatureVector.push_back(feature);
@@ -115,13 +115,13 @@ public final class DataSetLoader {
 			return null;
 		}
 
-//		descriptorList.add(descriptor);
-//		histogramList.add(histogram);
+		descriptorList.add(descriptor);
+		histogramList.add(histogram);
 
 		DataSet requestDataSet = new DataSet();
 		requestDataSet.setFeatureVector(trainFeatureVector);
-//		requestDataSet.setDescriptorList(descriptorList);
-//		requestDataSet.setHistogramList(histogramList);
+		requestDataSet.setDescriptorList(descriptorList);
+		requestDataSet.setHistogramList(histogramList);
 
 		return requestDataSet;
 	}
