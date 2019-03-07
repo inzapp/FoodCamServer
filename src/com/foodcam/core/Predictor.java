@@ -1,5 +1,7 @@
 package com.foodcam.core;
 
+import java.util.ArrayList;
+
 import org.json.JSONObject;
 import org.opencv.core.Mat;
 
@@ -29,17 +31,26 @@ public final class Predictor extends PredictorOperator {
 	 * @param imgPath
 	 * @return
 	 */
-	@Override
 	public JSONObject predict(Mat receivedImg) {
 		DataSet requestDataSet = getDataSetOfReceivedImg(receivedImg);
 
-		String foodName = getFoodName(requestDataSet);
-		String foodLink = getFoodLink(foodName);
+//		String foodName = getFoodName(requestDataSet);
+//		String foodLink = getFoodLink(foodName);
+//		String firstLink = getFirstResponseFoodLink(requestDataSet);
+		
+		ArrayList<String> foodLinkListByTotalRanking = getFoodLinkListByTotalRanking(requestDataSet);
+		JSONObject json = new JSONObject();
+		
+		for(int i=0; i<foodLinkListByTotalRanking.size(); i++) 
+			json.put(Integer.toString(i + 1), foodLinkListByTotalRanking.get(i));
+		
+		return json;
+		
 
-		pRes.log(foodName);
-		pRes.log(foodLink);
+//		pRes.log(foodName);
+//		pRes.log(foodLink);
 
-		return getResult(foodLink);
+//		return getResult(foodLink);
 	}
 
 	/**

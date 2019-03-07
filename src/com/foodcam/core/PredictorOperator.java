@@ -1,15 +1,38 @@
 package com.foodcam.core;
 
-import org.json.JSONObject;
+import java.util.ArrayList;
+
 import org.opencv.core.Mat;
 
-public abstract class PredictorOperator extends PredictorInitializer {
+import com.foodcam.domain.DataSet;
 
-	/**
-	 * 이미지의 경로를 인자로 받아 해당 이미지가 어떤 이미지인지 예측해 해당 이미지를 소개하는 링크를 Json 형태로 리턴
-	 * 
-	 * @param imgPath
-	 * @return
-	 */
-	abstract JSONObject predict(Mat receivedImg);
+/**
+ * Predictor의 순위결정 연산을 담당하는 클래스
+ * @author root
+ *
+ */
+public class PredictorOperator extends PredictorInitializer {
+	
+	ArrayList<String> getFoodLinkListByTotalRanking(DataSet requestDataSet) {
+		
+		ArrayList<String> foodLinkListByTotalRanking = new ArrayList<>();
+		foodLinkListByTotalRanking.add(getFirstResponseFoodLink(requestDataSet));
+		
+		
+		
+		return foodLinkListByTotalRanking;
+		
+	}
+	
+	private String getFirstResponseFoodLink(DataSet requestDataSet) {
+		
+		return linkMap.get(responseMap.get(getFirstResponse(requestDataSet)));
+	}
+
+	private int getFirstResponse(DataSet requestDataSet) {
+		
+		return (int) knn.findNearest(requestDataSet.getFeatureVector().row(0), k, new Mat());
+	}
+	
+	
 }
