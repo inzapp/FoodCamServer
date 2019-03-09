@@ -1,7 +1,7 @@
 package com.foodcam.domain;
 
 /**
- * k-NN 테스트 시 각 음식별 매칭률을 계산하기 위한 횟수 누적기
+ * svm 테스트 시 각 음식별 매칭률을 계산하기 위한 횟수 누적기
  * 
  * @author root
  *

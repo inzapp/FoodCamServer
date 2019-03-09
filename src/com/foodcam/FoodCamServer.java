@@ -1,6 +1,6 @@
 package com.foodcam;
 
-import com.foodcam.test.KnnAccuracyTester;
+import com.foodcam.test.SVMAccuracyTester;
 
 /**
  * Main 클래스
@@ -12,7 +12,7 @@ public final class FoodCamServer extends ServerInitializer {
 //		FoodCamServer foodCamServer = new FoodCamServer();
 //		foodCamServer.activate();
 		
-		KnnAccuracyTester tester = new KnnAccuracyTester();
+		SVMAccuracyTester tester = new SVMAccuracyTester();
 		tester.test();
 	}
 }
