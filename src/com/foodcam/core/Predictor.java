@@ -45,6 +45,17 @@ public final class Predictor extends PredictorOperator {
 		
 		return json;
 	}
+	
+	/**
+	 * 클라이언트 요청이 아닌 서버 내부 테스트에 사용되는 raw response
+	 * 
+	 * @param requestFeature
+	 * @return
+	 */
+	public int rawPredict(Mat requestFeature) {
+		
+		return (int) svm.predict(requestFeature);
+	}
 
 	/**
 	 * 클라이언트로부터 수신된 이미지에 대한 DataSet을 리턴한다 해당 DataSet은 k-NN, descriptorMatching,

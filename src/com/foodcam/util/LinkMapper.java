@@ -13,6 +13,7 @@ public class LinkMapper {
 	private HashMap<String, String> linkMap;
 
 	public LinkMapper() {
+		
 		linkMap = new HashMap<>();
 
 		linkMap.put("bibimbab", "http://allrecipes.kr/recipe/868/-----.aspx");
@@ -35,6 +36,7 @@ public class LinkMapper {
 	}
 
 	public HashMap<String, String> getLinkMap() {
+		
 		return linkMap;
 	}
 }

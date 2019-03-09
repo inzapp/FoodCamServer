@@ -6,6 +6,7 @@ package com.foodcam.test;
  *
  */
 public final class HistogramViewTester implements Tester{
+	
 	@Override
 	public void test() {
 		

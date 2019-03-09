@@ -2,15 +2,10 @@ package com.foodcam.test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.opencv.core.Mat;
-import org.opencv.ml.KNearest;
-import org.opencv.ml.Ml;
-import org.opencv.ml.SVM;
-import org.opencv.utils.Converters;
 
+import com.foodcam.core.Predictor;
 import com.foodcam.core.train.DataSetLoader;
 import com.foodcam.domain.DataSet;
 import com.foodcam.domain.MatchCountAccumulater;
@@ -30,15 +25,8 @@ public final class SVMAccuracyTester implements Tester {
 		DataSetLoader trainDataSetLoader = new DataSetLoader();
 		
 		DataSet halfTrainDataSet = trainDataSetLoader.getTrainDataSet(DataSetLoader.HALF_TRAIN);
-		Mat trainFeatureVector = halfTrainDataSet.getFeatureVector();
-		List<Integer> halfTrainLabelList = halfTrainDataSet.getFeatureLabelList();
+		Predictor.getInstance().train(halfTrainDataSet);
 
-		SVM knn = SVM.create();
-		knn.setKernel(SVM.LINEAR);
-		knn.setType(SVM.C_SVC);
-		knn.train(trainFeatureVector, Ml.ROW_SAMPLE, Converters.vector_int_to_Mat(halfTrainLabelList));
-
-//		DataSetLoader testDataSetLoader = new DataSetLoader();
 		DataSet halfTestDataSet = trainDataSetLoader.getTrainDataSet(DataSetLoader.HALF_TEST);
 		Mat testFeatureVector = halfTestDataSet.getFeatureVector();
 		ArrayList<Integer> halfTestLabelList = halfTestDataSet.getFeatureLabelList();
@@ -59,7 +47,7 @@ public final class SVMAccuracyTester implements Tester {
 			Mat curTestFeature = testFeatureVector.row(i);
 			
 			int label = halfTestLabelList.get(i);
-			int response = (int) knn.predict(curTestFeature);
+			int response = (int) Predictor.getInstance().rawPredict(curTestFeature);
 			
 			if (response == label) {
 				matchCountAccumulaterOf.get(label).addMatchCount();
@@ -73,10 +61,11 @@ public final class SVMAccuracyTester implements Tester {
 			matchCountAccumulaterOf.get(label).addTotalFeatureCount();
 		}
 
+		System.out.println();
 		for (int i = 0; i < matchCountAccumulaterOf.size(); i++)
 			System.out.println(responseMap.get(i) + " " + matchCountAccumulaterOf.get(i).getMatchingRate() + "%");
 
 		float totalMatchingRate = (totalMatchCount / testFeatureVector.rows()) * 100.0f;
-		System.out.println("Total matching rate : " + totalMatchingRate + "%");
+		System.out.println("\nTotal matching rate : " + totalMatchingRate + "%");
 	}
 }

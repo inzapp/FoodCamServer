@@ -6,5 +6,6 @@ package com.foodcam.test;
  *
  */
 interface Tester {
+	
 	public void test();
 }

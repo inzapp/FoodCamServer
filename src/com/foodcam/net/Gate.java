@@ -36,6 +36,7 @@ public final class Gate implements Runnable {
 	 */
 	@Override
 	public void run() {
+		
 		if (!getStream())
 			return;
 
@@ -57,6 +58,7 @@ public final class Gate implements Runnable {
 	 * @return
 	 */
 	private boolean getStream() {
+		
 		try {
 			oos = new ObjectOutputStream(clientSocket.getOutputStream());
 			ois = new ObjectInputStream(clientSocket.getInputStream());
@@ -77,6 +79,7 @@ public final class Gate implements Runnable {
 	 * @return
 	 */
 	private boolean keyMatching(String requestKey) {
+		
 		if (!requestKey.equals(Cmd.SERVER_KEY)) {
 			disconnect();
 			pRes.log("[FATAL] Key matching failure");
@@ -88,6 +91,7 @@ public final class Gate implements Runnable {
 
 	// 요청정보에서 서버 키 추출
 	private String getRequestKey() {
+		
 		String requestKey = "DEFAULT";
 		try {
 			JSONObject json = new JSONObject((String) ois.readObject());
@@ -118,6 +122,7 @@ public final class Gate implements Runnable {
 	 * @param serverStatus
 	 */
 	private void sendServerStatus(String serverStatus) {
+		
 		send("serverStatus", serverStatus);
 
 		if (serverStatus.equals(Cmd.SERVER_IS_BUSY))
@@ -130,6 +135,7 @@ public final class Gate implements Runnable {
 	 * 실제로 서버에 접속해 이미지를 전송받기 시작한다
 	 */
 	private void enterServer() {
+		
 		pRes.log("접속  IP : " + clientSocket.getInetAddress().getHostAddress());
 		pRes.serverThreadPool.execute(new RequestPic(oos, ois));
 	}
@@ -141,6 +147,7 @@ public final class Gate implements Runnable {
 	 * @param msg
 	 */
 	private void send(String request, String msg) {
+		
 		JSONObject json = new JSONObject();
 		try {
 			json.put(request, msg);
@@ -153,6 +160,7 @@ public final class Gate implements Runnable {
 	 * 클라이언트와 연결을 종료한다
 	 */
 	private void disconnect() {
+		
 		try {
 			clientSocket.getOutputStream().close();
 		} catch (Exception e) {

@@ -3,18 +3,16 @@ package com.foodcam.core;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.json.JSONObject;
 import org.opencv.core.Mat;
-import org.opencv.ml.KNearest;
 import org.opencv.ml.Ml;
 import org.opencv.ml.SVM;
 import org.opencv.ml.TrainData;
 import org.opencv.utils.Converters;
 
-import com.foodcam.core.train.DataSetLoader;
 import com.foodcam.domain.DataSet;
 import com.foodcam.domain.ResponseMapper;
 import com.foodcam.util.LinkMapper;
+import com.foodcam.util.pRes;
 
 /**
  * Predictor에 필요한 인스턴스들의 초기화와 descriptor matching, histogram calculating과 같은 연산을
@@ -23,42 +21,32 @@ import com.foodcam.util.LinkMapper;
  * @author root
  *
  */
-abstract class PredictorInitializer {
+abstract class PredictorTrainer {
 
 	SVM svm;
 	HashMap<Integer, String> responseMap;
 	HashMap<String, String> linkMap;
 	ArrayList<Mat> descriptorList;
 	ArrayList<Mat> histogramList;
-//	int k;
 
+	PredictorTrainer() {
 
-	PredictorInitializer() {
-		DataSet trainDataSet = getTrainDataSet();
-
-		responseMap = getResponseMap(trainDataSet);
-
-		linkMap = getLinkMap();
-
-//		k = getK(trainDataSet);
-
-		svm = getTrainedSVM(trainDataSet);
-
-		descriptorList = getDescriptorList(trainDataSet);
-
-		histogramList = getHistogramList(trainDataSet);
+		getLinkMap();
 	}
-
-	/**
-	 * 훈련을 위해 필요한 모든 이미지 데이터를 묶어 DataSet 형으로 로드한다
-	 * 
-	 * @return
-	 */
-	private DataSet getTrainDataSet() {
-		DataSetLoader dataSetLoader = new DataSetLoader();
-		DataSet trainDataSet = dataSetLoader.getTrainDataSet(DataSetLoader.ALL);
-
-		return trainDataSet;
+	
+	public void train(DataSet trainDataSet) {
+		
+		pRes.log("이미지 훈련을 시작합니다. 이 작업은 몇 분 정도 소요될 수 있습니다.");
+		
+		responseMap = getResponseMap(trainDataSet);
+		
+		descriptorList = getDescriptorList(trainDataSet);
+		
+		histogramList = getHistogramList(trainDataSet);
+		
+		svm = getTrainedSVM(trainDataSet);
+		
+		pRes.log("이미지 훈련을 완료했습니다.");
 	}
 
 	/**
@@ -68,6 +56,7 @@ abstract class PredictorInitializer {
 	 * @return
 	 */
 	private HashMap<Integer, String> getResponseMap(DataSet trainDataSet) {
+		
 		ResponseMapper responseMapper = trainDataSet.getResponseMapper();
 		return responseMapper.getResponseMap();
 	}
@@ -83,50 +72,13 @@ abstract class PredictorInitializer {
 	}
 
 	/**
-	 * k-NN에서 주변 몇 개의 feature를 보고 해당 개체를 분류할지 정해주는 k를 로드한다
-	 * 
-	 * @param trainDataSet
-	 * @return
-	 */
-//	private int getK(DataSet trainDataSet) {
-//		ArrayList<Integer> trainFeatureLabelList = trainDataSet.getFeatureLabelList();
-//		int minFeatureCount = getMinFeatureCount(trainFeatureLabelList);
-//
-//		int k = (int) (Math.sqrt(minFeatureCount));
-//		return k % 2 != 0 ? k : k + 1;
-//	}
-
-	/**
-	 * feature리스트를 인자로 받아 해당 리스트에 존재하는 feature 중 가장 적은 feature의 갯수를 리턴한다
-	 * 
-	 * @param trainFeatureLabelList
-	 * @return
-	 */
-//	private int getMinFeatureCount(ArrayList<Integer> trainFeatureLabelList) {
-//		int count = 0;
-//		int minCount = Integer.MAX_VALUE;
-//		int beforeLabel = trainFeatureLabelList.get(0);
-//		for (int curLabel : trainFeatureLabelList) {
-//			if (beforeLabel == curLabel) {
-//				count++;
-//			} else {
-//				minCount = count < minCount ? count : minCount;
-//				count = 0;
-//			}
-//
-//			beforeLabel = curLabel;
-//		}
-//
-//		return minCount;
-//	}
-
-	/**
 	 * featureVector과 labelList가 train된 SVM을 로드한다
 	 * 
 	 * @param trainDataSet
 	 * @return
 	 */
 	private SVM getTrainedSVM(DataSet trainDataSet) {
+		
 		SVM newKnn = SVM.create();
 		newKnn.setKernel(SVM.LINEAR);
 		newKnn.setType(SVM.C_SVC);
@@ -137,6 +89,7 @@ abstract class PredictorInitializer {
 		
 		TrainData trainData = TrainData.create(trainFeatureVector, Ml.ROW_SAMPLE, convertedLabelList);
 		boolean res = newKnn.train(trainData);
+		
 		return res ? newKnn : null;
 	}
 
@@ -147,6 +100,7 @@ abstract class PredictorInitializer {
 	 * @return
 	 */
 	private ArrayList<Mat> getDescriptorList(DataSet trainDataSet) {
+		
 		return trainDataSet.getDescriptorList();
 	}
 
@@ -157,6 +111,7 @@ abstract class PredictorInitializer {
 	 * @return
 	 */
 	private ArrayList<Mat> getHistogramList(DataSet trainDataSet) {
+		
 		return trainDataSet.getHistogramList();
 	}
 }

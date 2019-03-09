@@ -8,6 +8,8 @@ import java.util.concurrent.ThreadPoolExecutor;
 import org.opencv.core.Core;
 
 import com.foodcam.core.Predictor;
+import com.foodcam.core.train.DataSetLoader;
+import com.foodcam.domain.DataSet;
 import com.foodcam.net.Gate;
 import com.foodcam.util.pRes;
 
@@ -18,6 +20,7 @@ import com.foodcam.util.pRes;
  *
  */
 class ServerInitializer {
+	
 	static {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 	}
@@ -29,6 +32,7 @@ class ServerInitializer {
 	 * 3. 클라이언트의 접속대기를 시작한다
 	 */
 	public void activate() {
+		
 		if (!initServer())
 			return;
 
@@ -64,6 +68,7 @@ class ServerInitializer {
 	 * 서버 종료 시 스레드풀의 종료를 위한 종료 훅을 스레드로서 할당한다
 	 */
 	private void addShutdownHook() {
+		
 		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
 			try {
 				pRes.serverThreadPool.shutdownNow();
@@ -79,7 +84,11 @@ class ServerInitializer {
 	 * 이미지 예측에 대한 시간을 대폭 줄어들게 한다
 	 */
 	private void preProcess() {
-		Predictor.getInstance();
+		
+		DataSetLoader trainDataSetLoader = new DataSetLoader();
+		DataSet allTrainDataSet = trainDataSetLoader.getTrainDataSet(DataSetLoader.ALL);
+		
+		Predictor.getInstance().train(allTrainDataSet);
 	}
 
 	/**
@@ -90,6 +99,7 @@ class ServerInitializer {
 	 * 바로 새로운 클라이언트의 접속을 대기하게 된다
 	 */
 	private void acceptClient() {
+		
 		pRes.log("서버 초기화 성공 : 클라이언트의 접속을 대기합니다");
 
 		while (true) {

@@ -11,6 +11,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @author root
  */
 public abstract class pRes {
+	
 	public static final int PORT = 12332;
 	public static final int MAX_THREAD_COUNT = 100;
 	public static ServerSocket serverSocket;
@@ -19,6 +20,7 @@ public abstract class pRes {
 	public static final String TRAIN_DATA_PATH = "trainData";
 
 	public static void log(String msg) {
+		
 		String curTime = new SimpleDateFormat("[yy.MM.dd kk:mm:ss] ").format(new Date());
 		System.out.println(curTime + msg);
 	}

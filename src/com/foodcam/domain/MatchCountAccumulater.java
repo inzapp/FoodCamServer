@@ -7,6 +7,7 @@ package com.foodcam.domain;
  *
  */
 public class MatchCountAccumulater {
+	
 	private float totalFeatureCount = 0;
 	private float matchCount = 0;
 

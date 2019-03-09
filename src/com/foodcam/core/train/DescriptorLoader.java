@@ -5,8 +5,6 @@ import org.opencv.core.MatOfKeyPoint;
 import org.opencv.features2d.FastFeatureDetector;
 import org.opencv.features2d.ORB;
 
-import com.foodcam.util.pRes;
-
 /**
  * 이미지의 키포인트를 추출해 디스크립터를 로드하는 클래스 descriptor matching에 사용된다
  * 

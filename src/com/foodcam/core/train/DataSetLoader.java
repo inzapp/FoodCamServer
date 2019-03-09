@@ -28,8 +28,8 @@ public final class DataSetLoader {
 	public static final int HALF_TEST = 1;
 
 	private DataLoader knnFeatureLoader = new FeatureLoader();
-	private DataLoader descriptorLoader = new DescriptorLoader();
-	private DataLoader histogramLoader = new HistogramLoader();
+//	private DataLoader descriptorLoader = new DescriptorLoader();
+//	private DataLoader histogramLoader = new HistogramLoader();
 
 	public DataSet getTrainDataSet(int requestType) {
 		
@@ -39,8 +39,8 @@ public final class DataSetLoader {
 		ArrayList<Integer> trainLabelList = new ArrayList<>();
 		ResponseMapper responseMapper = new ResponseMapper();
 
-		ArrayList<Mat> descriptorList = new ArrayList<>();
-		ArrayList<Mat> histogramList = new ArrayList<>();
+//		ArrayList<Mat> descriptorList = new ArrayList<>();
+//		ArrayList<Mat> histogramList = new ArrayList<>();
 
 		File trainDataDir = new File(pRes.TRAIN_DATA_PATH);
 		if (!trainDataDir.exists()) {
@@ -70,16 +70,16 @@ public final class DataSetLoader {
 					continue;
 
 				Mat feature = knnFeatureLoader.load(img);
-				Mat descriptor = descriptorLoader.load(img);
-				Mat histogram = histogramLoader.load(img);
+//				Mat descriptor = descriptorLoader.load(img);
+//				Mat histogram = histogramLoader.load(img);
 
 				try {
 					trainFeatureVector.push_back(feature);
 					trainLabelList.add(i);
 					responseMapper.mapResponse(i, curDir.getName());
 
-					descriptorList.add(descriptor);
-					histogramList.add(histogram);
+//					descriptorList.add(descriptor);
+//					histogramList.add(histogram);
 				} catch (Exception e) {
 					pRes.log("[Train failure] - " + curFile.getAbsolutePath());
 					return null;
@@ -92,10 +92,10 @@ public final class DataSetLoader {
 		trainDataSet.setFeatureLabelList(trainLabelList);
 		trainDataSet.setResponseMapper(responseMapper);
 
-		trainDataSet.setDescriptorList(descriptorList);
-		trainDataSet.setHistogramList(histogramList);
+//		trainDataSet.setDescriptorList(descriptorList);
+//		trainDataSet.setHistogramList(histogramList);
 
-		System.out.println("Success to load train data set");
+		pRes.log("Success to load train data set");
 		return trainDataSet;
 	}
 
@@ -108,8 +108,8 @@ public final class DataSetLoader {
 	public DataSet getRequestDataSet(Mat receivedImg) {
 		
 		Mat feature = knnFeatureLoader.load(receivedImg);
-		Mat descriptor = descriptorLoader.load(receivedImg);
-		Mat histogram = histogramLoader.load(receivedImg);
+//		Mat descriptor = descriptorLoader.load(receivedImg);
+//		Mat histogram = histogramLoader.load(receivedImg);
 		
 		Mat trainFeatureVector = new Mat();
 
@@ -123,8 +123,8 @@ public final class DataSetLoader {
 			return null;
 		}
 
-		descriptorList.add(descriptor);
-		histogramList.add(histogram);
+//		descriptorList.add(descriptor);
+//		histogramList.add(histogram);
 
 		DataSet requestDataSet = new DataSet();
 		requestDataSet.setFeatureVector(trainFeatureVector);

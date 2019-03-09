@@ -23,6 +23,7 @@ public final class DescriptorTester implements Tester{
 	}
 
     private static void featureView(String imgPath) {
+    	
     	Mat img = Imgcodecs.imread(imgPath, Imgcodecs.IMREAD_ANYCOLOR);
     	Imgproc.blur(img, img, new Size(4, 4));
 
@@ -38,6 +39,7 @@ public final class DescriptorTester implements Tester{
     }
     
     private static void arrView(String imgPath) {
+    	
     	Mat img = Imgcodecs.imread(imgPath);
     	
     	int blurVal = 4;
