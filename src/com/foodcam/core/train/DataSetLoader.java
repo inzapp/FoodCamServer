@@ -22,6 +22,7 @@ import com.foodcam.util.pRes;
  *
  */
 public final class DataSetLoader {
+	
 	public static final int ALL = -1;
 	public static final int HALF_TRAIN = 0;
 	public static final int HALF_TEST = 1;
@@ -30,15 +31,16 @@ public final class DataSetLoader {
 	private DataLoader descriptorLoader = new DescriptorLoader();
 	private DataLoader histogramLoader = new HistogramLoader();
 
-	private Mat trainFeatureVector = new Mat();
-	private ArrayList<Integer> trainLabelList = new ArrayList<>();
-	private ResponseMapper responseMapper = new ResponseMapper();
-
-	private ArrayList<Mat> descriptorList = new ArrayList<>();
-	private ArrayList<Mat> histogramList = new ArrayList<>();
-
 	public DataSet getTrainDataSet(int requestType) {
+		
 		pRes.log("Start loading train data set...");
+		
+		Mat trainFeatureVector = new Mat();
+		ArrayList<Integer> trainLabelList = new ArrayList<>();
+		ResponseMapper responseMapper = new ResponseMapper();
+
+		ArrayList<Mat> descriptorList = new ArrayList<>();
+		ArrayList<Mat> histogramList = new ArrayList<>();
 
 		File trainDataDir = new File(pRes.TRAIN_DATA_PATH);
 		if (!trainDataDir.exists()) {
@@ -104,9 +106,15 @@ public final class DataSetLoader {
 	 * @return
 	 */
 	public DataSet getRequestDataSet(Mat receivedImg) {
+		
 		Mat feature = knnFeatureLoader.load(receivedImg);
 		Mat descriptor = descriptorLoader.load(receivedImg);
 		Mat histogram = histogramLoader.load(receivedImg);
+		
+		Mat trainFeatureVector = new Mat();
+
+		ArrayList<Mat> descriptorList = new ArrayList<>();
+		ArrayList<Mat> histogramList = new ArrayList<>();
 
 		try {
 			trainFeatureVector.push_back(feature);

@@ -9,6 +9,7 @@ import java.util.HashMap;
  *
  */
 public class ResponseMapper {
+	
 	private HashMap<Integer, String> responseMap;
 
 	public ResponseMapper() {

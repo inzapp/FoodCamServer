@@ -1,5 +1,6 @@
 package com.foodcam.test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Map;
 import org.opencv.core.Mat;
 import org.opencv.ml.KNearest;
 import org.opencv.ml.Ml;
+import org.opencv.ml.SVM;
 import org.opencv.utils.Converters;
 
 import com.foodcam.core.train.DataSetLoader;
@@ -15,34 +17,36 @@ import com.foodcam.domain.MatchCountAccumulater;
 import com.foodcam.domain.ResponseMapper;
 
 /**
- * knn 매칭률 측정을 위한 테스트 클래스
+ * svm 매칭률 측정을 위한 테스트 클래스
  * 
  * @author root
  *
  */
-public final class KnnAccuracyTester implements Tester {
+public final class SVMAccuracyTester implements Tester {
 
 	@Override
 	public void test() {
-		// TODO : 반복이 두번 돈다 해결하자
 		
 		DataSetLoader trainDataSetLoader = new DataSetLoader();
-
+		
 		DataSet halfTrainDataSet = trainDataSetLoader.getTrainDataSet(DataSetLoader.HALF_TRAIN);
 		Mat trainFeatureVector = halfTrainDataSet.getFeatureVector();
 		List<Integer> halfTrainLabelList = halfTrainDataSet.getFeatureLabelList();
 
-		KNearest knn = KNearest.create();
+		SVM knn = SVM.create();
+		knn.setKernel(SVM.LINEAR);
+		knn.setType(SVM.C_SVC);
 		knn.train(trainFeatureVector, Ml.ROW_SAMPLE, Converters.vector_int_to_Mat(halfTrainLabelList));
 
+//		DataSetLoader testDataSetLoader = new DataSetLoader();
 		DataSet halfTestDataSet = trainDataSetLoader.getTrainDataSet(DataSetLoader.HALF_TEST);
 		Mat testFeatureVector = halfTestDataSet.getFeatureVector();
-		List<Integer> halfTestLabelList = halfTestDataSet.getFeatureLabelList();
+		ArrayList<Integer> halfTestLabelList = halfTestDataSet.getFeatureLabelList();
 
 		ResponseMapper responseMapper = halfTestDataSet.getResponseMapper();
-		Map<Integer, String> responseMap = responseMapper.getResponseMap();
+		HashMap<Integer, String> responseMap = responseMapper.getResponseMap();
 
-		Map<Integer, MatchCountAccumulater> matchCountAccumulaterOf = new HashMap<>();
+		HashMap<Integer, MatchCountAccumulater> matchCountAccumulaterOf = new HashMap<>();
 		int maxIndexOfTestLabelList = halfTestLabelList.get(halfTestLabelList.size() - 1);
 		
 		for (int i = 0; i <= maxIndexOfTestLabelList; i++)
