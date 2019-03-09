@@ -7,7 +7,6 @@ import org.opencv.core.Mat;
 
 import com.foodcam.core.train.DataSetLoader;
 import com.foodcam.domain.DataSet;
-import com.foodcam.util.pRes;
 
 /**
  * 훈련된 데이터를 기반으로 새로운 이미지가 어떤 음식인지를 예측하는 클래스

@@ -27,24 +27,19 @@ public final class DataSetLoader {
 	public static final int HALF_TRAIN = 0;
 	public static final int HALF_TEST = 1;
 
-	private DataLoader knnFeatureLoader = new FeatureLoader();
-//	private DataLoader descriptorLoader = new DescriptorLoader();
-//	private DataLoader histogramLoader = new HistogramLoader();
+	private DataLoader svmFeatureLoader = new FeatureLoader();
 
 	public DataSet getTrainDataSet(int requestType) {
 		
-		pRes.log("Start loading train data set...");
+		pRes.log("훈련 데이터셋 로딩을 시작합니다.");
 		
 		Mat trainFeatureVector = new Mat();
 		ArrayList<Integer> trainLabelList = new ArrayList<>();
 		ResponseMapper responseMapper = new ResponseMapper();
 
-//		ArrayList<Mat> descriptorList = new ArrayList<>();
-//		ArrayList<Mat> histogramList = new ArrayList<>();
-
 		File trainDataDir = new File(pRes.TRAIN_DATA_PATH);
 		if (!trainDataDir.exists()) {
-			pRes.log("trainData dir found failure");
+			pRes.log("trainData 디렉토리를 찾을 수 없습니다");
 			return null;
 		}
 
@@ -69,19 +64,15 @@ public final class DataSetLoader {
 				if (img.empty())
 					continue;
 
-				Mat feature = knnFeatureLoader.load(img);
-//				Mat descriptor = descriptorLoader.load(img);
-//				Mat histogram = histogramLoader.load(img);
+				Mat feature = svmFeatureLoader.load(img);
 
 				try {
 					trainFeatureVector.push_back(feature);
 					trainLabelList.add(i);
 					responseMapper.mapResponse(i, curDir.getName());
 
-//					descriptorList.add(descriptor);
-//					histogramList.add(histogram);
 				} catch (Exception e) {
-					pRes.log("[Train failure] - " + curFile.getAbsolutePath());
+					pRes.log("[훈련 실패] - " + curFile.getAbsolutePath());
 					return null;
 				}
 			}
@@ -92,10 +83,7 @@ public final class DataSetLoader {
 		trainDataSet.setFeatureLabelList(trainLabelList);
 		trainDataSet.setResponseMapper(responseMapper);
 
-//		trainDataSet.setDescriptorList(descriptorList);
-//		trainDataSet.setHistogramList(histogramList);
-
-		pRes.log("Success to load train data set");
+		pRes.log("훈련 데이터셋 로딩을 완료했습니다");
 		return trainDataSet;
 	}
 
@@ -107,29 +95,18 @@ public final class DataSetLoader {
 	 */
 	public DataSet getRequestDataSet(Mat receivedImg) {
 		
-		Mat feature = knnFeatureLoader.load(receivedImg);
-//		Mat descriptor = descriptorLoader.load(receivedImg);
-//		Mat histogram = histogramLoader.load(receivedImg);
-		
+		Mat feature = svmFeatureLoader.load(receivedImg);
 		Mat trainFeatureVector = new Mat();
-
-		ArrayList<Mat> descriptorList = new ArrayList<>();
-		ArrayList<Mat> histogramList = new ArrayList<>();
 
 		try {
 			trainFeatureVector.push_back(feature);
 		} catch (Exception e) {
-			pRes.log("[Request data set load failure] - ");
+			pRes.log("[요청 데이터셋 로딩 실패] - ");
 			return null;
 		}
 
-//		descriptorList.add(descriptor);
-//		histogramList.add(histogram);
-
 		DataSet requestDataSet = new DataSet();
 		requestDataSet.setFeatureVector(trainFeatureVector);
-		requestDataSet.setDescriptorList(descriptorList);
-		requestDataSet.setHistogramList(histogramList);
 
 		return requestDataSet;
 	}

@@ -19,6 +19,7 @@ class FeatureLoader implements DataLoader {
 
 	@Override
 	public Mat load(Mat rawImg) {
+		
 		resize(rawImg);
 
 		blur(rawImg);
@@ -36,6 +37,7 @@ class FeatureLoader implements DataLoader {
 	 * @param rawImg
 	 */
 	private void resize(Mat rawImg) {
+		
 		if (rawImg.width() != WIDTH || rawImg.height() != HEIGHT)
 			Imgproc.resize(rawImg, rawImg, new Size(WIDTH, HEIGHT));
 	}
@@ -49,6 +51,7 @@ class FeatureLoader implements DataLoader {
 	 * @param rawImg
 	 */
 	private void blur(Mat rawImg) {
+		
 		Imgproc.blur(rawImg, rawImg, new Size(blurVal, blurVal));
 	}
 
@@ -58,6 +61,7 @@ class FeatureLoader implements DataLoader {
 	 * @param rawImg
 	 */
 	private void convertTo32Float(Mat rawImg) {
+		
 		rawImg.convertTo(rawImg, CvType.CV_32F);
 	}
 
@@ -70,6 +74,7 @@ class FeatureLoader implements DataLoader {
 	 * @return
 	 */
 	private Mat reshape(Mat rawImg) {
+		
 		try {
 			rawImg = rawImg.reshape(1, 1);
 			return rawImg;

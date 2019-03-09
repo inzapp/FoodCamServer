@@ -10,6 +10,7 @@ import com.foodcam.core.train.DataSetLoader;
 import com.foodcam.domain.DataSet;
 import com.foodcam.domain.MatchCountAccumulater;
 import com.foodcam.domain.ResponseMapper;
+import com.foodcam.util.pRes;
 
 /**
  * svm 매칭률 측정을 위한 테스트 클래스
@@ -22,6 +23,7 @@ public final class SVMAccuracyTester implements Tester {
 	@Override
 	public void test() {
 		
+		pRes.log("SVM Accuracy 테스트 모드");
 		DataSetLoader trainDataSetLoader = new DataSetLoader();
 		
 		DataSet halfTrainDataSet = trainDataSetLoader.getTrainDataSet(DataSetLoader.HALF_TRAIN);

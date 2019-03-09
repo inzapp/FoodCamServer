@@ -2,9 +2,6 @@ package com.foodcam.core;
 
 import java.util.ArrayList;
 
-import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
-
 import com.foodcam.domain.DataSet;
 
 /**

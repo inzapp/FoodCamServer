@@ -15,8 +15,8 @@ import com.foodcam.util.LinkMapper;
 import com.foodcam.util.pRes;
 
 /**
- * Predictor에 필요한 인스턴스들의 초기화와 descriptor matching, histogram calculating과 같은 연산을
- * 담당하는 함수를 가지고 있다
+ * Predictor의 훈련을 담당하는 클래스
+ * DataSet을 인자로 받아 필요한 정보를 훈련하고 로드한다
  * 
  * @author root
  *
@@ -26,8 +26,6 @@ abstract class PredictorTrainer {
 	SVM svm;
 	HashMap<Integer, String> responseMap;
 	HashMap<String, String> linkMap;
-	ArrayList<Mat> descriptorList;
-	ArrayList<Mat> histogramList;
 
 	PredictorTrainer() {
 
@@ -39,10 +37,6 @@ abstract class PredictorTrainer {
 		pRes.log("이미지 훈련을 시작합니다. 이 작업은 몇 분 정도 소요될 수 있습니다.");
 		
 		responseMap = getResponseMap(trainDataSet);
-		
-		descriptorList = getDescriptorList(trainDataSet);
-		
-		histogramList = getHistogramList(trainDataSet);
 		
 		svm = getTrainedSVM(trainDataSet);
 		
@@ -79,39 +73,17 @@ abstract class PredictorTrainer {
 	 */
 	private SVM getTrainedSVM(DataSet trainDataSet) {
 		
-		SVM newKnn = SVM.create();
-		newKnn.setKernel(SVM.LINEAR);
-		newKnn.setType(SVM.C_SVC);
+		SVM newSVM = SVM.create();
+		newSVM.setKernel(SVM.LINEAR);
+		newSVM.setType(SVM.C_SVC);
 		Mat trainFeatureVector = trainDataSet.getFeatureVector();
 
 		ArrayList<Integer> trainFeatureLabelList = trainDataSet.getFeatureLabelList();
 		Mat convertedLabelList = Converters.vector_int_to_Mat(trainFeatureLabelList);
 		
 		TrainData trainData = TrainData.create(trainFeatureVector, Ml.ROW_SAMPLE, convertedLabelList);
-		boolean res = newKnn.train(trainData);
+		boolean res = newSVM.train(trainData);
 		
-		return res ? newKnn : null;
-	}
-
-	/**
-	 * descriptorMatching에 필요한 descriptor 리스트를 반환한다
-	 * 
-	 * @param trainDataSet
-	 * @return
-	 */
-	private ArrayList<Mat> getDescriptorList(DataSet trainDataSet) {
-		
-		return trainDataSet.getDescriptorList();
-	}
-
-	/**
-	 * histogramComparing에 필요한 histogram 리스트를 반환한다
-	 * 
-	 * @param trainDataSet
-	 * @return
-	 */
-	private ArrayList<Mat> getHistogramList(DataSet trainDataSet) {
-		
-		return trainDataSet.getHistogramList();
+		return res ? newSVM : null;
 	}
 }
