@@ -1,10 +1,12 @@
 package com.foodcam.test;
 
 /**
- * DescriptorTester, HistogramTester, KnnAccracyTester의 기반 인터페이스
+ * SVMAccracyTester의 기반 인터페이스
+ * 
  * @author root
- *
+ * 
  */
 interface Tester {
+	
 	public void test();
 }

@@ -30,6 +30,7 @@ public final class RequestPic implements Runnable {
 	private ObjectInputStream ois;
 
 	public RequestPic(ObjectOutputStream oos, ObjectInputStream ois) {
+		
 		this.oos = oos;
 		this.ois = ois;
 	}
@@ -40,6 +41,7 @@ public final class RequestPic implements Runnable {
 	 */
 	@Override
 	public void run() {
+		
 		Mat receivedImg = receiveImgFromClient();
 		if (receivedImg == null) {
 			disconnect();
@@ -58,6 +60,7 @@ public final class RequestPic implements Runnable {
 	 * @return
 	 */
 	private Mat receiveImgFromClient() {
+		
 		byte[] byteArray = null;
 		try {
 			byteArray = (byte[]) ois.readObject();
@@ -81,6 +84,7 @@ public final class RequestPic implements Runnable {
 	 * @param json
 	 */
 	private void sendResult(JSONObject json) {
+		
 		try {
 			oos.writeObject(json.toString());
 		} catch (Exception e) {
@@ -94,6 +98,7 @@ public final class RequestPic implements Runnable {
 	 * OutputStream을 닫음으로써 클라이언트와 연결 종료
 	 */
 	private void disconnect() {
+		
 		try {
 			oos.close();
 		} catch (Exception ignored) {

@@ -2,9 +2,6 @@ package com.foodcam.core;
 
 import java.util.ArrayList;
 
-import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
-
 import com.foodcam.domain.DataSet;
 
 /**
@@ -13,7 +10,7 @@ import com.foodcam.domain.DataSet;
  * @author root
  *
  */
-public class PredictorOperator extends PredictorInitializer {
+public class PredictorOperator extends PredictorTrainer {
 
 	/**
 	 * 가장 유사한 음식들의 소개링크를 순위대로 순차저장해 리턴한다
@@ -26,10 +23,6 @@ public class PredictorOperator extends PredictorInitializer {
 
 		ArrayList<String> foodLinkListByTotalRanking = new ArrayList<>();
 		foodLinkListByTotalRanking.add(getFirstResponseFoodLink(requestDataSet));
-
-//		ArrayList<String> foodLinkListExceptFirstRanking = getFoodLinkListExceptFirstRanking(requestDataSet);
-//		for (String curExceptFirstRanking : foodLinkListExceptFirstRanking)
-//			foodLinkListByTotalRanking.add(curExceptFirstRanking);
 
 		return foodLinkListByTotalRanking;
 	}
@@ -54,32 +47,5 @@ public class PredictorOperator extends PredictorInitializer {
 	private int getFirstResponse(DataSet requestDataSet) {
 
 		return (int) svm.predict(requestDataSet.getFeatureVector().row(0));
-//		return (int) knn.findNearest(requestDataSet.getFeatureVector().row(0), k, new Mat());
 	}
-
-//	private ArrayList<String> getFoodLinkListExceptFirstRanking(DataSet requestDataSet) {
-//
-//		ArrayList<String> foodLinkListExceptFirstRanking = new ArrayList<>();
-//		ArrayList<Mat> requestHistogramList = requestDataSet.getHistogramList();
-//		Mat requestHistogram = requestHistogramList.get(0);
-//		
-////		double m0Res, m1Res, m2Res, m3Res, t0Res, t1Res, t2Res, t3Res;
-////		m0Res = m2Res = t0Res = t2Res = -1;
-////		m1Res = m1Res = t0Res = t2Res = Double.MAX_VALUE;
-//		
-//		double bestCompareResult, curCompareResult;
-//		bestCompareResult = curCompareResult = -1;
-//		Mat bestHistogram = new Mat();
-//		
-//		for(Mat curServerHistogram : this.histogramList) {
-//			curCompareResult = Imgproc.compareHist(curServerHistogram, requestHistogram, Imgproc.HISTCMP_INTERSECT);
-//			if(curCompareResult < bestCompareResult) {
-//				bestHistogram = curServerHistogram;
-//				bestCompareResult = curCompareResult;
-//			}
-//		}
-//
-//		return foodLinkListExceptFirstRanking;
-//	}
-
 }
