@@ -7,6 +7,7 @@ import java.util.Map;
 import org.opencv.core.Mat;
 import org.opencv.ml.KNearest;
 import org.opencv.ml.Ml;
+import org.opencv.ml.SVM;
 import org.opencv.utils.Converters;
 
 import com.foodcam.core.train.DataSetLoader;
@@ -24,18 +25,20 @@ public final class KnnAccuracyTester implements Tester {
 
 	@Override
 	public void test() {
-		// TODO : 반복이 두번 돈다 해결하자
-		
 		DataSetLoader trainDataSetLoader = new DataSetLoader();
-
 		DataSet halfTrainDataSet = trainDataSetLoader.getTrainDataSet(DataSetLoader.HALF_TRAIN);
 		Mat trainFeatureVector = halfTrainDataSet.getFeatureVector();
 		List<Integer> halfTrainLabelList = halfTrainDataSet.getFeatureLabelList();
 
-		KNearest knn = KNearest.create();
+		SVM knn = SVM.create();
+		knn.setKernel(SVM.LINEAR);
+		knn.setType(SVM.C_SVC);
 		knn.train(trainFeatureVector, Ml.ROW_SAMPLE, Converters.vector_int_to_Mat(halfTrainLabelList));
+//		knn.save("train-data.yml");
+//		SVM knn = SVM.load("train-data.yml");
 
-		DataSet halfTestDataSet = trainDataSetLoader.getTrainDataSet(DataSetLoader.HALF_TEST);
+		DataSetLoader testDataSetLoader = new DataSetLoader();
+		DataSet halfTestDataSet = testDataSetLoader.getTrainDataSet(DataSetLoader.HALF_TEST);
 		Mat testFeatureVector = halfTestDataSet.getFeatureVector();
 		List<Integer> halfTestLabelList = halfTestDataSet.getFeatureLabelList();
 

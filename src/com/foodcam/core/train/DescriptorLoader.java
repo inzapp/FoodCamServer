@@ -42,7 +42,7 @@ class DescriptorLoader implements DataLoader {
 		getDescriptor();
 
 		if (descriptor.empty()) {
-			pRes.log("Empty descriptor");
+//			pRes.log("Empty descriptor");
 			return null;
 		}
 

@@ -53,7 +53,8 @@ public class PredictorOperator extends PredictorInitializer {
 	 */
 	private int getFirstResponse(DataSet requestDataSet) {
 
-		return (int) knn.findNearest(requestDataSet.getFeatureVector().row(0), k, new Mat());
+		return (int) svm.predict(requestDataSet.getFeatureVector().row(0));
+//		return (int) knn.findNearest(requestDataSet.getFeatureVector().row(0), k, new Mat());
 	}
 
 //	private ArrayList<String> getFoodLinkListExceptFirstRanking(DataSet requestDataSet) {

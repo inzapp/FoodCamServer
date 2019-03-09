@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import org.opencv.core.Mat;
 import org.opencv.ml.KNearest;
 import org.opencv.ml.Ml;
+import org.opencv.ml.SVM;
 import org.opencv.ml.TrainData;
 import org.opencv.utils.Converters;
 
@@ -24,12 +25,12 @@ import com.foodcam.util.LinkMapper;
  */
 abstract class PredictorInitializer {
 
-	KNearest knn;
+	SVM svm;
 	HashMap<Integer, String> responseMap;
 	HashMap<String, String> linkMap;
 	ArrayList<Mat> descriptorList;
 	ArrayList<Mat> histogramList;
-	int k;
+//	int k;
 
 
 	PredictorInitializer() {
@@ -39,9 +40,9 @@ abstract class PredictorInitializer {
 
 		linkMap = getLinkMap();
 
-		k = getK(trainDataSet);
+//		k = getK(trainDataSet);
 
-		knn = getTrainedKnn(trainDataSet);
+		svm = getTrainedSVM(trainDataSet);
 
 		descriptorList = getDescriptorList(trainDataSet);
 
@@ -61,7 +62,7 @@ abstract class PredictorInitializer {
 	}
 
 	/**
-	 * k-NN의 response와 실제 디렉토리이름(음식이름)을 매핑하기 위한 HashMap을 리턴한다
+	 * SVM의 response와 실제 디렉토리이름(음식이름)을 매핑하기 위한 HashMap을 리턴한다
 	 * 
 	 * @param trainDataSet
 	 * @return
@@ -87,13 +88,13 @@ abstract class PredictorInitializer {
 	 * @param trainDataSet
 	 * @return
 	 */
-	private int getK(DataSet trainDataSet) {
-		ArrayList<Integer> trainFeatureLabelList = trainDataSet.getFeatureLabelList();
-		int minFeatureCount = getMinFeatureCount(trainFeatureLabelList);
-
-		int k = (int) (Math.sqrt(minFeatureCount));
-		return k % 2 != 0 ? k : k + 1;
-	}
+//	private int getK(DataSet trainDataSet) {
+//		ArrayList<Integer> trainFeatureLabelList = trainDataSet.getFeatureLabelList();
+//		int minFeatureCount = getMinFeatureCount(trainFeatureLabelList);
+//
+//		int k = (int) (Math.sqrt(minFeatureCount));
+//		return k % 2 != 0 ? k : k + 1;
+//	}
 
 	/**
 	 * feature리스트를 인자로 받아 해당 리스트에 존재하는 feature 중 가장 적은 feature의 갯수를 리턴한다
@@ -101,32 +102,34 @@ abstract class PredictorInitializer {
 	 * @param trainFeatureLabelList
 	 * @return
 	 */
-	private int getMinFeatureCount(ArrayList<Integer> trainFeatureLabelList) {
-		int count = 0;
-		int minCount = Integer.MAX_VALUE;
-		int beforeLabel = trainFeatureLabelList.get(0);
-		for (int curLabel : trainFeatureLabelList) {
-			if (beforeLabel == curLabel) {
-				count++;
-			} else {
-				minCount = count < minCount ? count : minCount;
-				count = 0;
-			}
-
-			beforeLabel = curLabel;
-		}
-
-		return minCount;
-	}
+//	private int getMinFeatureCount(ArrayList<Integer> trainFeatureLabelList) {
+//		int count = 0;
+//		int minCount = Integer.MAX_VALUE;
+//		int beforeLabel = trainFeatureLabelList.get(0);
+//		for (int curLabel : trainFeatureLabelList) {
+//			if (beforeLabel == curLabel) {
+//				count++;
+//			} else {
+//				minCount = count < minCount ? count : minCount;
+//				count = 0;
+//			}
+//
+//			beforeLabel = curLabel;
+//		}
+//
+//		return minCount;
+//	}
 
 	/**
-	 * featureVector과 labelList가 train된 KNearest를 로드한다
+	 * featureVector과 labelList가 train된 SVM을 로드한다
 	 * 
 	 * @param trainDataSet
 	 * @return
 	 */
-	private KNearest getTrainedKnn(DataSet trainDataSet) {
-		KNearest newKnn = KNearest.create();
+	private SVM getTrainedSVM(DataSet trainDataSet) {
+		SVM newKnn = SVM.create();
+		newKnn.setKernel(SVM.LINEAR);
+		newKnn.setType(SVM.C_SVC);
 		Mat trainFeatureVector = trainDataSet.getFeatureVector();
 
 		ArrayList<Integer> trainFeatureLabelList = trainDataSet.getFeatureLabelList();

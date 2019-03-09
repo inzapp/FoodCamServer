@@ -6,7 +6,7 @@ import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
 /**
- * 이미지를 단일행으로 벡터화 해 로드하는 클래스로 knn train에 사용된다
+ * 이미지를 단일행으로 벡터화 해 로드하는 클래스로 svm train에 사용된다
  * 
  * @author root
  *
@@ -29,7 +29,7 @@ class FeatureLoader implements DataLoader {
 	}
 
 	/**
-	 * k-NN train을 위한 이미지 벡터화에 대비해
+	 * svm train을 위한 이미지 벡터화에 대비해
 	 * 만약 지정된 사이즈와 다른 크기의 매트릭스가 들어온 경우
 	 * 지정된 크기에 맞게 재조정 된다
 	 * 
@@ -53,7 +53,7 @@ class FeatureLoader implements DataLoader {
 	}
 
 	/**
-	 * k-NN train을 위한 변환과정으로 raw Mat을 32bit Float로 변환한다
+	 * svm train을 위한 변환과정으로 raw Mat을 32bit Float로 변환한다
 	 * 
 	 * @param rawImg
 	 */
@@ -64,7 +64,7 @@ class FeatureLoader implements DataLoader {
 	/**
 	 * 다수행 매트릭스를 단일 행으로 변환해
 	 * 하나의 매트릭스에 push_back 함으로서
-	 * k-NN 훈련에 필요한 데이터를 만들 수 있게 된다
+	 * svm 훈련에 필요한 데이터를 만들 수 있게 된다
 	 * 
 	 * @param rawImg
 	 * @return
