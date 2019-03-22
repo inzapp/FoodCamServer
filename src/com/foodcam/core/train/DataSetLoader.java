@@ -114,9 +114,18 @@ public final class DataSetLoader {
 			pRes.log("[요청 데이터셋 로딩 실패] - ");
 			return null;
 		}
+		
+		Mat histogramMatrix = histogramMatrixLoader.load(receivedImg);
+		Histogram newHistogram = new Histogram();
+		newHistogram.setMatrix(histogramMatrix);
+		newHistogram.setDirectoryIdx(-1);
+		
+		ArrayList<Histogram> histogramList = new ArrayList<>();
+		histogramList.add(newHistogram);
 
 		DataSet requestDataSet = new DataSet();
 		requestDataSet.setFeatureVector(trainFeatureVector);
+		requestDataSet.setHistogramList(histogramList);
 
 		return requestDataSet;
 	}
