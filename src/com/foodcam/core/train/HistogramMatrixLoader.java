@@ -12,7 +12,7 @@ import org.opencv.imgproc.Imgproc;
 import com.foodcam.util.pRes;
 
 /**
- * 이미지 RGB값의 분포도인 히스토그램을 로드하는 클래스로 histogram calculation에 사용된다
+ * 이미지 RGB값의 분포도인 히스토그램을 로드하는 클래스로 histogram comparing에 사용된다
  * 
  * @author root
  *

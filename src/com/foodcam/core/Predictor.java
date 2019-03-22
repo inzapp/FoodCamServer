@@ -17,12 +17,10 @@ import com.foodcam.domain.DataSet;
 public final class Predictor extends PredictorOperator {
 
 	private static class Singleton {
-		
 		static final Predictor INSTANCE = new Predictor();
 	}
 
 	public static Predictor getInstance() {
-		
 		return Singleton.INSTANCE;
 	}
 
@@ -33,7 +31,6 @@ public final class Predictor extends PredictorOperator {
 	 * @return
 	 */
 	public synchronized JSONObject predict(Mat receivedImg) {
-		
 		DataSet requestDataSet = getDataSetOfReceivedImg(receivedImg);
 		
 		ArrayList<String> foodLinkListByTotalRanking = getFoodLinkListByTotalRanking(requestDataSet);
@@ -52,7 +49,6 @@ public final class Predictor extends PredictorOperator {
 	 * @return
 	 */
 	public int rawPredict(Mat requestFeature) {
-		
 		return (int) classifier.predict(requestFeature);
 	}
 
@@ -64,7 +60,6 @@ public final class Predictor extends PredictorOperator {
 	 * @return
 	 */
 	private DataSet getDataSetOfReceivedImg(Mat receivedImg) {
-		
 		DataSetLoader dataSetLoader = new DataSetLoader();
 		DataSet dataSet = dataSetLoader.getRequestDataSet(receivedImg);
 
