@@ -10,6 +10,7 @@ import org.opencv.ml.TrainData;
 import org.opencv.utils.Converters;
 
 import com.foodcam.domain.DataSet;
+import com.foodcam.domain.Histogram;
 import com.foodcam.domain.ResponseMapper;
 import com.foodcam.util.LinkMapper;
 import com.foodcam.util.pRes;
@@ -23,9 +24,10 @@ import com.foodcam.util.pRes;
  */
 abstract class PredictorTrainer {
 
-	SVM svm;
+	SVM classifier;
 	HashMap<Integer, String> responseMap;
 	HashMap<String, String> linkMap;
+	ArrayList<Histogram> histogramList; 
 
 	PredictorTrainer() {
 
@@ -38,7 +40,9 @@ abstract class PredictorTrainer {
 		
 		responseMap = getResponseMap(trainDataSet);
 		
-		svm = getTrainedSVM(trainDataSet);
+		classifier = getTrainedSVM(trainDataSet);
+		
+		histogramList = trainDataSet.getHistogramList();
 		
 		pRes.log("이미지 훈련을 완료했습니다.");
 	}
