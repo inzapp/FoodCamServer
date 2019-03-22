@@ -7,6 +7,7 @@ import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
 
 import com.foodcam.domain.DataSet;
+import com.foodcam.domain.Histogram;
 import com.foodcam.domain.ResponseMapper;
 import com.foodcam.util.pRes;
 
@@ -28,6 +29,7 @@ public final class DataSetLoader {
 	public static final int HALF_TEST = 1;
 
 	private DataLoader svmFeatureLoader = new FeatureLoader();
+	private DataLoader histogramMatrixLoader = new HistogramMatrixLoader();
 
 	public DataSet getTrainDataSet(int requestType) {
 		
@@ -36,6 +38,8 @@ public final class DataSetLoader {
 		Mat trainFeatureVector = new Mat();
 		ArrayList<Integer> trainLabelList = new ArrayList<>();
 		ResponseMapper responseMapper = new ResponseMapper();
+		
+		ArrayList<Histogram> histogramList = new ArrayList<>();
 
 		File trainDataDir = new File(pRes.TRAIN_DATA_PATH);
 		if (!trainDataDir.exists()) {
@@ -65,6 +69,12 @@ public final class DataSetLoader {
 					continue;
 
 				Mat feature = svmFeatureLoader.load(img);
+				Mat hisogramMatrix = histogramMatrixLoader.load(img);
+				
+				Histogram newHistogram = new Histogram();
+				newHistogram.setMatrix(hisogramMatrix);
+				newHistogram.setDirectoryIdx(i);
+				histogramList.add(newHistogram);
 
 				try {
 					trainFeatureVector.push_back(feature);
@@ -82,6 +92,7 @@ public final class DataSetLoader {
 		trainDataSet.setFeatureVector(trainFeatureVector);
 		trainDataSet.setFeatureLabelList(trainLabelList);
 		trainDataSet.setResponseMapper(responseMapper);
+		trainDataSet.setHistogramList(histogramList);
 
 		pRes.log("훈련 데이터셋 로딩을 완료했습니다");
 		return trainDataSet;
@@ -104,9 +115,18 @@ public final class DataSetLoader {
 			pRes.log("[요청 데이터셋 로딩 실패] - ");
 			return null;
 		}
+		
+		Mat histogramMatrix = histogramMatrixLoader.load(receivedImg);
+		Histogram newHistogram = new Histogram();
+		newHistogram.setMatrix(histogramMatrix);
+		newHistogram.setDirectoryIdx(-1);
+		
+		ArrayList<Histogram> histogramList = new ArrayList<>();
+		histogramList.add(newHistogram);
 
 		DataSet requestDataSet = new DataSet();
 		requestDataSet.setFeatureVector(trainFeatureVector);
+		requestDataSet.setHistogramList(histogramList);
 
 		return requestDataSet;
 	}

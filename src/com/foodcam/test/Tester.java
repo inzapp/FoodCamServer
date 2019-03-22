@@ -6,7 +6,7 @@ package com.foodcam.test;
  * @author root
  * 
  */
-interface Tester {
+public interface Tester {
 	
 	public void test();
 }

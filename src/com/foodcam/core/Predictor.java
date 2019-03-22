@@ -32,17 +32,17 @@ public final class Predictor extends PredictorOperator {
 	 * @param imgPath
 	 * @return
 	 */
-	public JSONObject predict(Mat receivedImg) {
+	public synchronized JSONObject predict(Mat receivedImg) {
 		
 		DataSet requestDataSet = getDataSetOfReceivedImg(receivedImg);
 		
 		ArrayList<String> foodLinkListByTotalRanking = getFoodLinkListByTotalRanking(requestDataSet);
-		JSONObject json = new JSONObject();
+		JSONObject foodLinkJsonByRanking = new JSONObject();
 		
 		for(int i=0; i<foodLinkListByTotalRanking.size(); i++) 
-			json.put(Integer.toString(i + 1), foodLinkListByTotalRanking.get(i));
+			foodLinkJsonByRanking.put(Integer.toString(i + 1), foodLinkListByTotalRanking.get(i));
 		
-		return json;
+		return foodLinkJsonByRanking;
 	}
 	
 	/**
@@ -53,7 +53,7 @@ public final class Predictor extends PredictorOperator {
 	 */
 	public int rawPredict(Mat requestFeature) {
 		
-		return (int) svm.predict(requestFeature);
+		return (int) classifier.predict(requestFeature);
 	}
 
 	/**

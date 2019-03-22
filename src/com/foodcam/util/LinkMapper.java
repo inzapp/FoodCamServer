@@ -16,21 +16,14 @@ public class LinkMapper {
 		
 		linkMap = new HashMap<>();
 
-		linkMap.put("bibimbab", "http://allrecipes.kr/recipe/868/-----.aspx");
-		linkMap.put("bibimnangmyeon", "http://www.10000recipe.com/recipe/6850942");
-		linkMap.put("ddukboki", "https://m.blog.naver.com/forgod2026/90193715054");
-		linkMap.put("dongas", "http://nemos.tistory.com/208");
+		linkMap.put("bibimbob", "http://allrecipes.kr/recipe/868/-----.aspx");
+		linkMap.put("boolgogi", "https://m.blog.naver.com/ju_need/220479101208");
+		linkMap.put("ddukgook", "http://www.10000recipe.com/recipe/6842725");
 		linkMap.put("dwanjangjjigae", "https://m.blog.naver.com/hjh1596/220073273213");
-		linkMap.put("friedchicken", "http://minorious.tistory.com/177");
 		linkMap.put("gimbab", "http://allrecipes.kr/recipe/510/------------.aspx");
 		linkMap.put("gimchijjigae", "http://amyzzung.tistory.com/162");
-		linkMap.put("jajangmyeon", "http://bmsj.tistory.com/169");
-		linkMap.put("jjambbong", "http://bmsj.tistory.com/170");
-		linkMap.put("mandoo", "http://amyzzung.tistory.com/933");
-		linkMap.put("moolnangmyeon", "http://www.10000recipe.com/recipe/4061208");
-		linkMap.put("pizza", "http://amyzzung.tistory.com/471");
-		linkMap.put("ramen", "http://milkywaystory.tistory.com/101");
-		linkMap.put("seasonedchicken", "http://www.10000recipe.com/recipe/6835696");
+		linkMap.put("samgaetang", "https://m.post.naver.com/viewer/postView.nhn?volumeNo=15918967&memberNo=916314");
+		linkMap.put("yulmoogimchi", "https://m.blog.naver.com/PostView.nhn?blogId=heranzeus&logNo=221068696877&proxyReferer=https%3A%2F%2Fwww.google.com%2F");
 
 		pRes.log("링크 매핑 완료");
 	}
