@@ -33,16 +33,16 @@ abstract class PredictorTrainer {
 		linkMap = getLinkMap();
 	}
 	
+	/**
+	 * DataSet을 인자로 훈련을 진행한다
+	 * ResponseMap 저장, SVM train, Histogram 리스트의 저장으로 진행된다
+	 * @param trainDataSet
+	 */
 	public void train(DataSet trainDataSet) {
-		
 		pRes.log("이미지 훈련을 시작합니다. 이 작업은 몇 분 정도 소요될 수 있습니다.");
-		
 		responseMap = getResponseMap(trainDataSet);
-		
 		classifier = getTrainedSVM(trainDataSet);
-		
 		histogramList = trainDataSet.getHistogramList();
-		
 		pRes.log("이미지 훈련을 완료했습니다.");
 	}
 
@@ -53,13 +53,12 @@ abstract class PredictorTrainer {
 	 * @return
 	 */
 	private HashMap<Integer, String> getResponseMap(DataSet trainDataSet) {
-		
 		ResponseMapper responseMapper = trainDataSet.getResponseMapper();
 		return responseMapper.getResponseMap();
 	}
 
 	/**
-	 * 추출된 디렉토리이름을 키로 해당 음식에 대한 소개 링크를 받아오는 링크 맵
+	 * 추출된 디렉토리이름을 키로 해당 음식에 대한 소개 링크를 받아오는 링크 맵을 리턴한다
 	 * 
 	 * @return
 	 */
@@ -75,7 +74,6 @@ abstract class PredictorTrainer {
 	 * @return
 	 */
 	private SVM getTrainedSVM(DataSet trainDataSet) {
-		
 		SVM newSVM = SVM.create();
 		newSVM.setKernel(SVM.LINEAR);
 		newSVM.setType(SVM.C_SVC);

@@ -18,20 +18,16 @@ public final class FoodCamServer extends ServerInitializer {
 	private Tester svmTester = new SVMAccuracyTester();
 
 	public static void main(String[] args) {
-
 		FoodCamServer server = new FoodCamServer();
 		server.br = new BufferedReader(new InputStreamReader(System.in));
 		server.mainIO();
 	}
 
 	private void mainIO() {
-
 		while (true) {
-
 			System.out.println("1. 서버 실행");
 			System.out.println("2. 테스트");
 			System.out.println("\n해당 번호를 입력하세요 : ");
-
 			try {
 				input = Integer.parseInt(br.readLine());
 			} catch (Exception e) {
@@ -55,18 +51,15 @@ public final class FoodCamServer extends ServerInitializer {
 	}
 
 	private void testIO() {
-
 		System.out.println("1. Histogram 테스트");
 		System.out.println("2. k-NN 테스트");
 		System.out.println("3. SVM 테스트");
 		System.out.println("\n해당 번호를 입력하세요 : ");
-
 		try {
 			input = Integer.parseInt(br.readLine());
 		} catch (Exception e) {
 			return;
 		}
-
 		switch (input) {
 		case 1:
 			break;
@@ -81,11 +74,9 @@ public final class FoodCamServer extends ServerInitializer {
 		default:
 			break;
 		}
-
 	}
 
 	private void cls() {
-
 		try {
 			final String os = System.getProperty("os.name");
 

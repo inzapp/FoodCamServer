@@ -68,7 +68,6 @@ class ServerInitializer {
 	 * 서버 종료 시 스레드풀의 종료를 위한 종료 훅을 스레드로서 할당한다
 	 */
 	private void addShutdownHook() {
-		
 		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
 			try {
 				pRes.serverThreadPool.shutdownNow();
@@ -84,7 +83,6 @@ class ServerInitializer {
 	 * 이미지 예측에 대한 시간을 대폭 줄어들게 한다
 	 */
 	private void preProcess() {
-		
 		DataSetLoader trainDataSetLoader = new DataSetLoader();
 		DataSet allTrainDataSet = trainDataSetLoader.getTrainDataSet(DataSetLoader.ALL);
 		
@@ -99,7 +97,6 @@ class ServerInitializer {
 	 * 바로 새로운 클라이언트의 접속을 대기하게 된다
 	 */
 	private void acceptClient() {
-		
 		pRes.log("서버 초기화 성공 : 클라이언트의 접속을 대기합니다");
 
 		while (true) {
