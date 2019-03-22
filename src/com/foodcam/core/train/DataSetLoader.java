@@ -7,6 +7,7 @@ import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
 
 import com.foodcam.domain.DataSet;
+import com.foodcam.domain.Histogram;
 import com.foodcam.domain.ResponseMapper;
 import com.foodcam.util.pRes;
 
@@ -28,6 +29,7 @@ public final class DataSetLoader {
 	public static final int HALF_TEST = 1;
 
 	private DataLoader svmFeatureLoader = new FeatureLoader();
+	private DataLoader histogramMatrixLoader = new HistogramMatrixLoader();
 
 	public DataSet getTrainDataSet(int requestType) {
 		
@@ -36,6 +38,8 @@ public final class DataSetLoader {
 		Mat trainFeatureVector = new Mat();
 		ArrayList<Integer> trainLabelList = new ArrayList<>();
 		ResponseMapper responseMapper = new ResponseMapper();
+		
+		ArrayList<Histogram> histogramList = new ArrayList<>();
 
 		File trainDataDir = new File(pRes.TRAIN_DATA_PATH);
 		if (!trainDataDir.exists()) {
@@ -65,6 +69,12 @@ public final class DataSetLoader {
 					continue;
 
 				Mat feature = svmFeatureLoader.load(img);
+				Mat hisogramMatrix = histogramMatrixLoader.load(img);
+				
+				Histogram newHistogram = new Histogram();
+				newHistogram.setMatrix(hisogramMatrix);
+				newHistogram.setDirectoryIdx(i);
+				histogramList.add(newHistogram);
 
 				try {
 					trainFeatureVector.push_back(feature);

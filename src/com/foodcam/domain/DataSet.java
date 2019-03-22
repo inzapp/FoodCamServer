@@ -16,6 +16,8 @@ public final class DataSet {
 	private Mat FeatureVector;
 	private ArrayList<Integer> featureLabelList;
 	private ResponseMapper responseMapper;
+	
+	private ArrayList<Histogram> histogramList;
 
 	public Mat getFeatureVector() {
 		return FeatureVector;
@@ -39,5 +41,13 @@ public final class DataSet {
 
 	public void setResponseMapper(ResponseMapper responseMapper) {
 		this.responseMapper = responseMapper;
+	}
+	
+	public ArrayList<Histogram> getHistogramList() {
+		return histogramList;
+	}
+
+	public void setHistogramList(ArrayList<Histogram> histogramList) {
+		this.histogramList = histogramList;
 	}
 }
