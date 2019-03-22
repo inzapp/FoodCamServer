@@ -26,21 +26,19 @@ public class PredictorOperator extends PredictorTrainer {
 	 */
 	ArrayList<String> getFoodLinkListByTotalRanking(DataSet requestDataSet) {
 
-		ArrayList<String> foodLinkListByTotalRanking = new ArrayList<>();
+		ArrayList<String> foodLinkListByTotalRank = new ArrayList<>();
 
 		int firstResponse = getFirstResponse(requestDataSet);
 		String firstFoodLink = linkMap.get(responseMap.get(firstResponse));
-		foodLinkListByTotalRanking.add(firstFoodLink);
+		foodLinkListByTotalRank.add(firstFoodLink);
 
-		ArrayList<String> theOtherFoodLinkList = getTheOtherFoodLinkList(requestDataSet, firstResponse);
-		for (String curLink : theOtherFoodLinkList)
-			foodLinkListByTotalRanking.add(curLink);
+		addTheOtherFoodLinkList(foodLinkListByTotalRank, requestDataSet);
 
-		return foodLinkListByTotalRanking;
+		return foodLinkListByTotalRank;
 	}
 
 	/**
-	 * 가장 비슷한 1순위 음식의 knn response를 받아온다
+	 * 가장 비슷한 1순위 음식의 svm response를 받아온다
 	 * 
 	 * @param requestDataSet
 	 * @return
@@ -49,12 +47,8 @@ public class PredictorOperator extends PredictorTrainer {
 		return (int) classifier.predict(requestDataSet.getFeatureVector().row(0));
 	}
 
-	private ArrayList<String> getTheOtherFoodLinkList(DataSet requestDataSet, int firstResponse) {
-
-		ArrayList<String> theOtherFoodLinkList = new ArrayList<>();
-
+	private void addTheOtherFoodLinkList(ArrayList<String> foodLinkListByTotalRank, DataSet requestDataSet) {
 		Mat requestMatrix = requestDataSet.getHistogramList().get(0).getMatrix();
-		ArrayList<Histogram> histogramList = requestDataSet.getHistogramList();
 
 		for (Histogram curHistogram : histogramList) {
 			Mat curMatrix = curHistogram.getMatrix();
@@ -67,16 +61,21 @@ public class PredictorOperator extends PredictorTrainer {
 		sortByMethodAndAddRank();
 		sortByRank();
 
-		for (int i = 0; i < addRankCount; ++i) {
-			int curResponse = histogramList.get(i).getDirectoryIdx();
-			if (curResponse == firstResponse) {
-				++addRankCount;
+		int addCount = 0;
+		int i = 0;
+		while (true) {
+			int curResponse = histogramList.get(i++).getDirectoryIdx();
+			String curLink = linkMap.get(responseMap.get(curResponse));
+			if (foodLinkListByTotalRank.contains(curLink))
 				continue;
-			}
-			theOtherFoodLinkList.add(linkMap.get(responseMap.get(curResponse)));
+
+			foodLinkListByTotalRank.add(linkMap.get(responseMap.get(curResponse)));
+			++addCount;
+			if (addCount == addRankCount)
+				break;
 		}
 
-		return theOtherFoodLinkList;
+		resetRank();
 	}
 
 	private void sortByMethodAndAddRank() {
@@ -110,5 +109,10 @@ public class PredictorOperator extends PredictorTrainer {
 		histogramList.sort((a, b) -> {
 			return Integer.compare(a.getRank(), b.getRank());
 		});
+	}
+
+	private void resetRank() {
+		for (Histogram curHistogram : histogramList)
+			curHistogram.resetRank();
 	}
 }

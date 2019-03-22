@@ -30,8 +30,7 @@ abstract class PredictorTrainer {
 	ArrayList<Histogram> histogramList; 
 
 	PredictorTrainer() {
-
-		getLinkMap();
+		linkMap = getLinkMap();
 	}
 	
 	public void train(DataSet trainDataSet) {

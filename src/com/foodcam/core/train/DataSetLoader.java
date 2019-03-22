@@ -92,6 +92,7 @@ public final class DataSetLoader {
 		trainDataSet.setFeatureVector(trainFeatureVector);
 		trainDataSet.setFeatureLabelList(trainLabelList);
 		trainDataSet.setResponseMapper(responseMapper);
+		trainDataSet.setHistogramList(histogramList);
 
 		pRes.log("훈련 데이터셋 로딩을 완료했습니다");
 		return trainDataSet;

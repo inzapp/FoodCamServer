@@ -32,6 +32,10 @@ public class Histogram {
 	public void addRank(int rank) {
 		this.rank += rank;
 	}
+	
+	public void resetRank() {
+		this.rank = 0;
+	}
 
 	public double getR0() {
 		return r0;
