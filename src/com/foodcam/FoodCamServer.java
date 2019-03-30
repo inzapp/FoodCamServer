@@ -3,6 +3,7 @@ package com.foodcam;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+import com.foodcam.test.HistogramViewer;
 import com.foodcam.test.SVMAccuracyTester;
 import com.foodcam.test.Tester;
 
@@ -15,7 +16,9 @@ public final class FoodCamServer extends ServerInitializer {
 
 	private int input;
 	private BufferedReader br;
-	private Tester svmTester = new SVMAccuracyTester();
+	private Tester tester = null;
+	private HistogramViewer histogramViewer = new HistogramViewer();
+	private SVMAccuracyTester svmAccuracyTester = new SVMAccuracyTester();
 
 	public static void main(String[] args) {
 		FoodCamServer server = new FoodCamServer();
@@ -52,8 +55,7 @@ public final class FoodCamServer extends ServerInitializer {
 
 	private void testIO() {
 		System.out.println("1. Histogram 테스트");
-		System.out.println("2. k-NN 테스트");
-		System.out.println("3. SVM 테스트");
+		System.out.println("2. SVM 테스트");
 		System.out.println("\n해당 번호를 입력하세요 : ");
 		try {
 			input = Integer.parseInt(br.readLine());
@@ -62,18 +64,18 @@ public final class FoodCamServer extends ServerInitializer {
 		}
 		switch (input) {
 		case 1:
+			tester = histogramViewer;
 			break;
 
 		case 2:
-			break;
-
-		case 3:
-			svmTester.test();
+			tester = svmAccuracyTester;
 			break;
 
 		default:
-			break;
+			return;
 		}
+
+		tester.test();
 	}
 
 	private void cls() {
