@@ -1,7 +1,7 @@
 package com.foodcam.util;
 
 /**
- * 공개키를 포함한 Json 사용 간 통신 규약
+ * 개인키를 포함한 Json 사용 간 통신 규약
  * 
  * @author root
  *

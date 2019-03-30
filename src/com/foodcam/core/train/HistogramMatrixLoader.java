@@ -12,12 +12,13 @@ import org.opencv.imgproc.Imgproc;
 import com.foodcam.util.pRes;
 
 /**
- * 이미지 RGB값의 분포도인 히스토그램을 로드하는 클래스로 histogram comparing에 사용된다
+ * 이미지 RGB값의 분포도인 히스토그램을 로드하는 클래스로 histogram comparison에 사용된다
  * 
  * @author root
  *
  */
 class HistogramMatrixLoader implements DataLoader {
+	
 	private Mat mask;
 	private MatOfInt channel;
 	private MatOfInt histSize;
@@ -76,6 +77,7 @@ class HistogramMatrixLoader implements DataLoader {
 	 * @param histogram
 	 */
 	private void getHistogram(List<Mat> bgrPlanes, Mat histogram) {
+		
 		Imgproc.calcHist(bgrPlanes, channel, mask, histogram, histSize, histRange, accumulate);
 	}
 }
