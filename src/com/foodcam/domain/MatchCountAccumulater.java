@@ -1,7 +1,7 @@
 package com.foodcam.domain;
 
 /**
- * svm 테스트 시 각 음식별 매칭률을 계산하기 위한 횟수 누적기
+ * SVM 테스트 시 각 음식별 매칭률을 계산하기 위한 횟수 누적기
  * 
  * totalFeatureCount
  * 총 테스트 데이터의 갯수로서 적중률을 추출하기 위한 분모의 역할을 한다

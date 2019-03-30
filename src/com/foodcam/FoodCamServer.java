@@ -8,7 +8,7 @@ import com.foodcam.test.SVMAccuracyTester;
 import com.foodcam.test.Tester;
 
 /**
- * Main 클래스
+ * Entry 클래스
  * 
  * @author root
  */

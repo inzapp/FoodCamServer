@@ -6,7 +6,7 @@ import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
 /**
- * 이미지를 단일행으로 벡터화 해 로드하는 클래스로 svm train에 사용된다
+ * 이미지를 단일행으로 벡터화 해 로드하는 클래스로 SVM train에 사용된다
  * 
  * @author root
  *
@@ -30,7 +30,7 @@ class FeatureLoader implements DataLoader {
 	}
 
 	/**
-	 * svm train을 위한 이미지 벡터화에 대비해
+	 * SVM train을 위한 이미지 벡터화에 대비해
 	 * 만약 지정된 사이즈와 다른 크기의 매트릭스가 들어온 경우
 	 * 지정된 크기에 맞게 재조정 된다
 	 * 

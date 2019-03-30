@@ -77,6 +77,7 @@ class HistogramMatrixLoader implements DataLoader {
 	 * @param histogram
 	 */
 	private void getHistogram(List<Mat> bgrPlanes, Mat histogram) {
+		
 		Imgproc.calcHist(bgrPlanes, channel, mask, histogram, histSize, histRange, accumulate);
 	}
 }

@@ -1,7 +1,7 @@
 package com.foodcam.test;
 
 /**
- * SVMAccracyTester의 기반 인터페이스
+ * 테스터 클래스의 기반 인터페이스
  * 
  * @author root
  * 

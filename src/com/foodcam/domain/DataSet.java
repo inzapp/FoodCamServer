@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.opencv.core.Mat;
 
 /**
- * 이미지 훈련에 필요한 데이터를 모아둔 클래스. Value Object로서 사용된다. svm train에 필요한 vector화된 Mat과 라벨,
+ * 이미지 훈련에 필요한 데이터를 모아둔 클래스. Value Object로서 사용된다. SVM train에 필요한 vector화된 Mat과 라벨,
  * 해당 이미지가 어떤 음식의 이미지인지를 매핑해놓은 com.foodguider.domains.ResponseMapper 클래스를 가지고 있고
  * 추천순위에 필요한 히스토그램 리스트를 가지고 있다
  * 
@@ -30,7 +30,6 @@ public final class DataSet {
 	private Mat featureVector;
 	private ArrayList<Integer> featureLabelList;
 	private ResponseMapper responseMapper;
-	
 	private ArrayList<Histogram> histogramList;
 
 	public Mat getFeatureVector() {

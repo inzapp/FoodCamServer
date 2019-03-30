@@ -17,8 +17,10 @@ import org.opencv.highgui.HighGui;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
+import com.foodcam.util.pRes;
+
 /**
- * 이미지 히스토그램을 가시화하기 위한 테스터
+ * 이미지 히스토그램을 가시화하기 위한 테스트 클래스
  * 
  * @author root
  *
@@ -27,6 +29,7 @@ public class HistogramViewer implements Tester {
 
 	@Override
 	public void test() {
+		pRes.log("Histogram Viewer 테스트 모드");
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String filename = null;
 		System.out.println("이미지 이름을 입력하세요 : ");
@@ -82,6 +85,5 @@ public class HistogramViewer implements Tester {
 		HighGui.imshow("Source image", src);
 		HighGui.imshow("calcHist Demo", histImage);
 		HighGui.waitKey(0);
-		System.exit(0);
 	}
 }

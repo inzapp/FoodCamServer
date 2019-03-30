@@ -13,7 +13,7 @@ import com.foodcam.domain.ResponseMapper;
 import com.foodcam.util.pRes;
 
 /**
- * svm 매칭률 측정을 위한 테스트 클래스
+ * SVM 매칭률 측정을 위한 테스트 클래스
  * 
  * @author root
  *
@@ -22,7 +22,6 @@ public final class SVMAccuracyTester implements Tester {
 
 	@Override
 	public void test() {
-		
 		pRes.log("SVM Accuracy 테스트 모드");
 		DataSetLoader trainDataSetLoader = new DataSetLoader();
 		
