@@ -5,8 +5,6 @@ import java.net.Socket;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
-import org.opencv.core.Core;
-
 import com.foodcam.core.Predictor;
 import com.foodcam.core.train.DataSetLoader;
 import com.foodcam.domain.DataSet;
