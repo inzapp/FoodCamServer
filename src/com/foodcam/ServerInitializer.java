@@ -22,7 +22,8 @@ import com.foodcam.util.pRes;
 class ServerInitializer {
 	
 	static {
-		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+		// System.loadLibrary(Core.NATIVE_LIBRARY_NAME); // for STS
+		System.load("/inz/lib/libopencv_java401.so");
 	}
 
 	/**
