@@ -2,9 +2,11 @@ package com.foodcam.core.train;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.ml.SVM;
 
 import com.foodcam.domain.DataSet;
 import com.foodcam.domain.Histogram;
@@ -25,14 +27,13 @@ import com.foodcam.util.pRes;
 public final class DataSetLoader {
 	
 	public static final int ALL = -1;
-	public static final int HALF_TRAIN = 0;
-	public static final int HALF_TEST = 1;
+//	public static final int HALF_TRAIN = -2;
+//	public static final int HALF_TEST = -3;
 
 	private DataLoader svmFeatureLoader = new FeatureLoader();
 	private DataLoader histogramMatrixLoader = new HistogramMatrixLoader();
 
-	public DataSet getTrainDataSet(int requestType) {
-		
+	public DataSet getTrainDataSet(int trainCount) {
 		pRes.log("훈련 데이터셋 로딩을 시작합니다.");
 		
 		Mat trainFeatureVector = new Mat();
@@ -47,21 +48,30 @@ public final class DataSetLoader {
 			return null;
 		}
 
-		File[] dirArr = trainDataDir.listFiles();
-		for (int i = 0; i < dirArr.length; i++) {
-			File curDir = dirArr[i];
+		Random random = new Random();
+		File[] dirs = trainDataDir.listFiles();
+		for (int i = 0; i < dirs.length; i++) {
+			File curDir = dirs[i];
 			if (!curDir.isDirectory())
 				continue;
 
-			File[] fileArr = curDir.listFiles();
-			for (int j = 0; j < fileArr.length; j++) {
-				File curFile = fileArr[j];
+			File[] files = curDir.listFiles();
+			ArrayList<Integer> randIdxList = new ArrayList<>();
+			while(true) {
+				int randIdx = random.nextInt(files.length);
+				if(randIdxList.contains(randIdx)) {
+					continue;
+				}
+				
+				randIdxList.add(randIdx);
+				if(randIdxList.size() == trainCount) {
+					break;
+				}
+			}
+			
+			for (int j = 0; j < (trainCount == ALL ? files.length : trainCount); j++) {
+				File curFile = trainCount == ALL ? files[j] : files[randIdxList.get(j)];
 				if (!curFile.isFile())
-					continue;
-
-				if (requestType == HALF_TRAIN && j % 2 == 1)
-					continue;
-				else if (requestType == HALF_TEST && j % 2 == 0)
 					continue;
 
 				Mat img = Imgcodecs.imread(curFile.getAbsolutePath());

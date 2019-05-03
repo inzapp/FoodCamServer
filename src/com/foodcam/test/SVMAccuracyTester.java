@@ -1,9 +1,13 @@
 package com.foodcam.test;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.opencv.core.Mat;
+import org.opencv.ml.SVM;
 
 import com.foodcam.core.Predictor;
 import com.foodcam.core.train.DataSetLoader;
@@ -23,12 +27,51 @@ public final class SVMAccuracyTester implements Tester {
 	@Override
 	public void test() {
 		pRes.log("SVM Accuracy 테스트 모드");
+		int minTrainDataCount = Integer.MAX_VALUE;
+		File[] dirs = new File(pRes.TRAIN_DATA_PATH).listFiles();
+		for(File curDir : dirs) {
+			File[] files = curDir.listFiles();
+			minTrainDataCount = files.length < minTrainDataCount ? files.length : minTrainDataCount;
+		}
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int trainCount, testCount;
+		while(true) {
+			System.out.printf("학습시킬 이미지의 갯수를 입력하세요(최대 %d) : ", minTrainDataCount);
+			try {
+				trainCount = Integer.parseInt(br.readLine());
+				if(1 <= trainCount && trainCount <= minTrainDataCount) {
+					break;	
+				} else {
+					System.out.println("갯수는 1이상 최대값 이하만 가능합니다.");
+					continue;	
+				}
+			} catch(Exception e) {
+				continue;
+			}	
+		}
+		
+		while(true) {
+			System.out.printf("테스트할 이미지의 갯수를 입력하세요(최대 %d) : ", minTrainDataCount);
+			try {
+				testCount = Integer.parseInt(br.readLine());
+				if(1 <= testCount && testCount <= minTrainDataCount) {
+					break;	
+				} else {
+					System.out.println("갯수는 1이상 최대값 이하만 가능합니다.");
+					continue;	
+				}
+			} catch(Exception e) {
+				continue;
+			}	
+		}
+		
 		DataSetLoader trainDataSetLoader = new DataSetLoader();
 		
-		DataSet halfTrainDataSet = trainDataSetLoader.getTrainDataSet(DataSetLoader.HALF_TRAIN);
+		DataSet halfTrainDataSet = trainDataSetLoader.getTrainDataSet(trainCount);
 		Predictor.getInstance().train(halfTrainDataSet);
 
-		DataSet halfTestDataSet = trainDataSetLoader.getTrainDataSet(DataSetLoader.HALF_TEST);
+		DataSet halfTestDataSet = trainDataSetLoader.getTrainDataSet(testCount);
 		Mat testFeatureVector = halfTestDataSet.getFeatureVector();
 		ArrayList<Integer> halfTestLabelList = halfTestDataSet.getFeatureLabelList();
 
