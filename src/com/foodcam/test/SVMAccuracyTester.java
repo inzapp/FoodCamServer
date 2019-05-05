@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.opencv.core.Mat;
-import org.opencv.ml.SVM;
 
 import com.foodcam.core.Predictor;
 import com.foodcam.core.train.DataSetLoader;

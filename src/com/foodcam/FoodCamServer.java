@@ -30,7 +30,7 @@ public final class FoodCamServer extends ServerInitializer {
 		while (true) {
 			System.out.println("1. 서버 실행");
 			System.out.println("2. 테스트");
-			System.out.println("\n해당 번호를 입력하세요 : ");
+			System.out.print("\n해당 번호를 입력하세요 : ");
 			try {
 				input = Integer.parseInt(br.readLine());
 			} catch (Exception e) {

@@ -57,7 +57,7 @@ class ServerInitializer {
 
 			return true;
 		} catch (Exception e) {
-			pRes.log("서버 초기화 실패 : 포트가 이미 사용중일 수 있습니다");
+			pRes.log("서버 초기화 실패 : 포트가 이미 사용중일 수 있습니다.");
 			return false;
 		}
 	}
@@ -71,7 +71,7 @@ class ServerInitializer {
 				pRes.serverThreadPool.shutdownNow();
 			} catch (Exception e) {
 			}
-			pRes.log("서버 셧다운 훅 성공");
+			pRes.log("서버 셧다운 훅 성공.");
 		}));
 	}
 
@@ -95,7 +95,7 @@ class ServerInitializer {
 	 * 바로 새로운 클라이언트의 접속을 대기하게 된다
 	 */
 	private void acceptClient() {
-		pRes.log("서버 초기화 성공 : 클라이언트의 접속을 대기합니다");
+		pRes.log("서버 초기화 성공 : 클라이언트의 접속을 대기합니다.");
 
 		while (true) {
 			try {

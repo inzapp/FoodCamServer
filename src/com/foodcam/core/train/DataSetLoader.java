@@ -56,17 +56,20 @@ public final class DataSetLoader {
 				continue;
 
 			File[] files = curDir.listFiles();
-			ArrayList<Integer> randIdxList = new ArrayList<>();
-			while(true) {
-				int randIdx = random.nextInt(files.length);
-				if(randIdxList.contains(randIdx)) {
-					continue;
-				}
-				
-				randIdxList.add(randIdx);
-				if(randIdxList.size() == trainCount) {
-					break;
-				}
+			ArrayList<Integer> randIdxList = null;
+			if(trainCount != ALL) {
+				randIdxList = new ArrayList<>();
+				while(true) {
+					int randIdx = random.nextInt(files.length);
+					if(randIdxList.contains(randIdx)) {
+						continue;
+					}
+					
+					randIdxList.add(randIdx);
+					if(randIdxList.size() == trainCount) {
+						break;
+					}
+				}	
 			}
 			
 			for (int j = 0; j < (trainCount == ALL ? files.length : trainCount); j++) {
@@ -104,7 +107,7 @@ public final class DataSetLoader {
 		trainDataSet.setResponseMapper(responseMapper);
 		trainDataSet.setHistogramList(histogramList);
 
-		pRes.log("훈련 데이터셋 로딩을 완료했습니다");
+		pRes.log("훈련 데이터셋 로딩을 완료했습니다.");
 		return trainDataSet;
 	}
 

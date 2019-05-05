@@ -16,16 +16,16 @@ public class LinkMapper {
 		
 		linkMap = new HashMap<>();
 
-		linkMap.put("bibimbob", "http://allrecipes.kr/recipe/868/-----.aspx");
+		linkMap.put("bibimbob", "http://www.10000recipe.com/recipe/2795635");
 		linkMap.put("boolgogi", "https://m.blog.naver.com/ju_need/220479101208");
-		linkMap.put("ddukgook", "http://www.10000recipe.com/recipe/6842725");
-		linkMap.put("dwanjangjjigae", "https://m.blog.naver.com/hjh1596/220073273213");
-		linkMap.put("gimbab", "http://allrecipes.kr/recipe/510/------------.aspx");
+		linkMap.put("ddukgook", "http://ic-eeecs.org/test/foodlist/ddukguk.html");
+		linkMap.put("dwanjangjjigae", "http://ic-eeecs.org/test/foodlist/doenjang.html");
+		linkMap.put("gimbab", "http://ic-eeecs.org/test/foodlist/gimbab.html");
 		linkMap.put("gimchijjigae", "http://amyzzung.tistory.com/162");
-		linkMap.put("samgaetang", "https://m.post.naver.com/viewer/postView.nhn?volumeNo=15918967&memberNo=916314");
-		linkMap.put("yulmoogimchi", "https://m.blog.naver.com/PostView.nhn?blogId=heranzeus&logNo=221068696877&proxyReferer=https%3A%2F%2Fwww.google.com%2F");
+		linkMap.put("samgaetang", "http://ic-eeecs.org/test/foodlist/samgyetang.html");
+		linkMap.put("yulmoogimchi", "http://ic-eeecs.org/test/foodlist/yeolmu.html");
 
-		pRes.log("링크 매핑 완료");
+		pRes.log("링크 매핑을 완료했습니다.");
 	}
 
 	public HashMap<String, String> getLinkMap() {
