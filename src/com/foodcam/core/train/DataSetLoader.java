@@ -6,7 +6,6 @@ import java.util.Random;
 
 import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.ml.SVM;
 
 import com.foodcam.domain.DataSet;
 import com.foodcam.domain.Histogram;
