@@ -14,7 +14,7 @@ import com.foodcam.domain.Histogram;
  * @author root
  *
  */
-public class PredictorOperator extends PredictorTrainer {
+class PredictorOperator extends PredictorTrainer {
 
 	/**
 	 * 1순위 이외에 몇개의 순위를 더 추출할지에 대한 갯수

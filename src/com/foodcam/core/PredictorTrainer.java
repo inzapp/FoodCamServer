@@ -22,7 +22,7 @@ import com.foodcam.util.pRes;
  * @author root
  *
  */
-abstract class PredictorTrainer {
+class PredictorTrainer {
 
 	SVM classifier;
 	HashMap<Integer, String> responseMap;
