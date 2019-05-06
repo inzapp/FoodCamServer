@@ -18,12 +18,13 @@ public class LinkMapper {
 
 		linkMap.put("bibimbob", "http://www.10000recipe.com/recipe/2795635");
 		linkMap.put("boolgogi", "https://m.blog.naver.com/ju_need/220479101208");
-		linkMap.put("ddukgook", "http://ic-eeecs.org/test/foodlist/ddukguk.html");
-		linkMap.put("dwanjangjjigae", "http://ic-eeecs.org/test/foodlist/doenjang.html");
-		linkMap.put("gimbab", "http://ic-eeecs.org/test/foodlist/gimbab.html");
-		linkMap.put("gimchijjigae", "http://amyzzung.tistory.com/162");
-		linkMap.put("samgaetang", "http://ic-eeecs.org/test/foodlist/samgyetang.html");
-		linkMap.put("yulmoogimchi", "http://ic-eeecs.org/test/foodlist/yeolmu.html");
+		linkMap.put("boodaejjigae", "https://foodcam.herokuapp.com/foodlist/boodaestew.html");
+		linkMap.put("ddukgook", "https://foodcam.herokuapp.com/foodlist/ddukguk.html");
+		linkMap.put("dwanjangjjigae", "https://foodcam.herokuapp.com/foodlist/doenjang.html");
+		linkMap.put("gimbab", "https://foodcam.herokuapp.com/foodlist/gimbab.html");
+		linkMap.put("gimchijjigae", "https://foodcam.herokuapp.com/foodlist/kimchistew.html");
+		linkMap.put("samgaetang", "https://foodcam.herokuapp.com/foodlist/samgyetang.html");
+		linkMap.put("yulmoogimchi", "https://foodcam.herokuapp.com/foodlist/yeolmu.html");
 
 		pRes.log("링크 매핑을 완료했습니다.");
 	}
